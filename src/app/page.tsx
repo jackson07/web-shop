@@ -23,8 +23,34 @@ export default function Home() {
 			</section>
 			<main className="max-h-screen overflow-y-auto">
 				<div className="grid grid-cols-4 gap-3 p-20">
-					<div className="bg-blue-200 p-4 h-72">Coluna 1</div>
-					<div className="bg-green-200 p-4">Coluna 2</div>
+					<div className="bg-blue-200 p-4 h-72 flex flex-col justify-between items-center">
+						<h2 className="text-2xl">Produto 1</h2>
+						<div className="flex items-center w-40 h-40">
+							<img
+								src="https://cdn-icons-png.flaticon.com/512/2331/2331716.png"
+								alt="Minha Figura"
+								className="max-h-full max-w-full"
+							/>
+						</div>
+						<div className="text-sm">
+                            descricao do produto
+						</div>
+						<div className="text-2xl">R$ 100,00</div>
+					</div>
+					<div className="bg-blue-200 p-4 h-72 flex flex-col justify-between items-center">
+						<h2 className="text-2xl">Produto 2</h2>
+						<div className="flex items-center w-40 h-40">
+							<img
+								src="https://cdn-icons-png.flaticon.com/512/2331/2331716.png"
+								alt="Minha Figura"
+								className="max-h-full max-w-full"
+							/>
+						</div>
+						<div className="text-sm">
+                            descricao do produto
+						</div>
+						<div className="text-2xl">R$ 100,00</div>
+					</div>
 					<div className="bg-yellow-200 p-4">Coluna 3</div>
 					<div className="bg-red-200 p-4">Coluna 4</div>	
 					<div className="bg-blue-200 p-4 h-72">Coluna 1</div>
