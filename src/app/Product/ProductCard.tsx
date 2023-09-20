@@ -26,9 +26,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, price }) 
 			<div className="h-6 flex items-center justify-center space-x-6 w-full">
 				<button className="flex items-center"><BiCartAdd/>Comprar</button>
 				<button className="group relative">
-					<BiBookmarkHeart />
+					<BiBookmarkHeart/>
 					<div className="hidden group-hover:block bg-black text-white text-xs absolute bottom-full transform -translate-x-1/2 p-1 rounded w-24">
-                    Lista de Desejos
+                        Lista de Desejos
 					</div>
 				</button>
 			</div>
