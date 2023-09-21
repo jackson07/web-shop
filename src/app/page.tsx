@@ -1,34 +1,11 @@
 import React from "react";
-import { BsFillHandbagFill   } from "react-icons/bs";
-import { BiSolidUser } from "react-icons/bi";
-import ProductCard from "./Product/ProductCard";
-import Link from "next/link";
+import ProductCard from "../Product/ProductCard";
+import Header from "@/header/header";
 
 export default function Home() {
 	return (
-		<div>
-			<section className="fixed top-0 flex h-10 w-full items-center justify-between bg-red-500 px-4">
-				<div className="flex items-center w-80 space-x-10 px-5">
-					<Link href="/">
-						<div className="text-2xl">Início</div>
-					</Link>
-					<Link href="/calcas">
-						<div className="text-xs text-gray-300">Calças</div>
-					</Link>
-					<Link href="/camisas">
-						<div className="text-xs text-gray-300">Camisas</div>
-					</Link>
-				</div>
-				<input type="text" placeholder="Pesquisar" className="w-96 rounded-full border border-gray-300 px-2 focus:border-gray-500 focus:outline-none" />
-				<div className="flex items-start justify-center">
-					<button className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
-						<BsFillHandbagFill />
-					</button>
-					<button className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
-						<BiSolidUser />
-					</button>
-				</div>
-			</section>
+		<div>			
+			<Header/>
 			<main className="max-h-screen overflow-y-auto">
 				<div className="grid grid-cols-4 gap-3 p-20">
 					<ProductCard 
