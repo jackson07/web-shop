@@ -20,7 +20,7 @@ const Header = () => {
 			<input
 				type="text"
 				placeholder="Pesquisar"
-				className="w-96 rounded-full border border-gray-300 px-2 focus:border-gray-500 focus:outline-none"
+				className="w-96 rounded-lg border border-gray-300 px-2 focus:border-gray-500 focus:outline-none"
 			/>
 			<div className="flex items-center justify-center">
 				<Link href="/sacola" className="text-2xl flex items-center cursor-pointer px-2">

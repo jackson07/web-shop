@@ -1,6 +1,7 @@
 "use client";
 import Header from "@/app/header/header";
 import React, { ChangeEvent, useState } from "react";
+import Link from "next/link";
 
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -53,7 +54,14 @@ export default function Produtos() {
 							</div>
 						)}
 					</div>
-					<button type="submit" className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600">Gravar</button>
+					<div className="flex items-center justify-between p-6">
+						<button type="submit" className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600">Gravar</button>
+						<button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+							<Link href="/">
+                                Voltar
+							</Link>
+						</button>
+					</div>
 				</form>
 				
 			</main>
