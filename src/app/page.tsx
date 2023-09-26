@@ -1,6 +1,6 @@
 import React from "react";
-import ProductCard from "../Product/ProductCard";
-import Header from "@/header/header";
+import ProductCard from "./Product/ProductCard";
+import Header from "./header/header";
 
 export default function Home() {
 	return (
@@ -42,7 +42,7 @@ export default function Home() {
 						price={199.99}/>
 				</div>
 			</main>
-			<footer className="absolute bottom-0 h-6 w-full bg-red-500">
+			<footer className="absolute bottom-0 h-6 w-full bg-gray-400">
 				<div className="flex items-center justify-center">@ create by Jack</div>
 			</footer>
 		</div>	
