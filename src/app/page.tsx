@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<div>			
 			<Header/>
-			<main className="max-h-screen overflow-y-auto">
+			<main className="min-h-screen">
 				<div className="grid grid-cols-4 gap-3 p-20">
 					<ProductCard 
 						title="Calça e Camisa" 
@@ -42,7 +42,7 @@ export default function Home() {
 						price={199.99}/>
 				</div>
 			</main>
-			<footer className="absolute bottom-0 h-6 w-full bg-gray-400">
+			<footer className="h-6 w-full bg-gray-400">
 				<div className="flex items-center justify-center">@ create by Jack</div>
 			</footer>
 		</div>	
