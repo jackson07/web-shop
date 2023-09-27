@@ -10,10 +10,10 @@ const Header = () => {
 				<Link href="/">
 					<div className="text-2xl">Início</div>
 				</Link>
-				<Link href="/calcas">
+				<Link href="/pages/calcas">
 					<div className="text-xs">Calças</div>
 				</Link>
-				<Link href="/cadastro">
+				<Link href="/pages/register">
 					<div className="text-xs">Cadastro</div>
 				</Link>
 			</div>
@@ -23,11 +23,11 @@ const Header = () => {
 				className="w-96 rounded-lg border border-gray-300 px-2 focus:border-gray-500 focus:outline-none"
 			/>
 			<div className="flex items-center justify-center">
-				<Link href="/sacola" className="text-2xl flex items-center cursor-pointer px-2">
+				<Link href="/pages/sacola" className="text-2xl flex items-center cursor-pointer px-2">
 					<BsFillHandbagFill/>
 					<p className="text-xs font-semibold flex bottom-0 text-end pt-3">05</p>
 				</Link>
-				<Link href="/loguin" className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
+				<Link href="/pages/login" className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
 					<BiSolidUser />
 				</Link>
 			</div>

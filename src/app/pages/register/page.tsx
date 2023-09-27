@@ -1,0 +1,119 @@
+"use client";
+import Header from "@/app/components/header/header";
+import React, { ChangeEvent, useState, useRef } from "react";
+import Link from "next/link";
+import { productController } from "@/ui/controller/product";
+
+export default function Produtos() {    
+	const [selectedImage, setSelectedImage] = useState<string | null>(null);
+	const productInputRef = useRef<HTMLInputElement>(null);
+	const descriprionInputRef = useRef<HTMLInputElement>(null);
+	const valueInputRef = useRef<HTMLInputElement>(null);
+	const imageInputRef = useRef<HTMLInputElement>(null);
+
+	const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const file = event.target?.files?.[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				setSelectedImage(reader.result as string);
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	return (
+		<div>
+			<Header />
+			<main className="min-h-screen flex items-center justify-center">	
+				<form
+					onSubmit={(event) => {
+						event.preventDefault();
+						productController.create({
+							name: productInputRef.current?.value as string,
+							description: descriprionInputRef.current?.value as string,
+							value: Number(valueInputRef.current?.value),
+							photo: selectedImage as string,
+						});
+					}}
+					className="bg-white p-8 rounded-lg shadow-md w-auto">
+					<h2 className="text-2xl font-semibold mb-4">Cadastro de Produto!</h2>
+					<div className="flex justify-between space-x-10">
+						<div>
+							<div className="mb-4">
+								<label 
+									className="block text-gray-600 mb-1">
+                                        Produto:
+								</label>
+								<input 
+									type="text" 
+									ref={productInputRef} 
+									placeholder="Nome do produto" 
+									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300" />
+							</div>
+							<div 
+								className="mb-4">
+								<label 
+									className="block text-gray-600 mb-1">                                        
+                                        Descrição::
+								</label>
+								<input 
+									type="text"
+									ref={descriprionInputRef} 
+									placeholder="Descrição do produto"
+									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>
+							</div>
+							<div className="mb-4">
+								<label className="block text-gray-600 mb-1">
+                                    Valor:
+								</label>
+								<input 
+									type="number" 
+									ref={valueInputRef}
+									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>
+							</div>
+							<div 
+								className="mb-4">
+								<label 
+									className="block text-gray-600 mb-1">
+                                    Foto:
+								</label>
+								<input 
+									type="file" 
+									accept="image/*" 
+									ref={imageInputRef}
+									onChange={handlePhotoChange} 
+									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>						
+							</div>
+						</div>					
+						{selectedImage && (
+							<div className="mb-4">
+								<label 
+									className="block text-gray-600 mb-1">
+                                    Imagem Selecionada:
+								</label>
+								<img 
+									src={selectedImage} 
+									alt="Imagem Selecionada" 
+									className="max-w-xs" />
+							</div>
+						)}
+					</div>
+					<div className="flex items-center justify-between p-6">
+						<button 
+							type="submit" 
+							className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Gravar
+						</button>
+						<button 
+							className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+							<Link href="/">
+                                Voltar
+							</Link>
+						</button>
+					</div>
+				</form>
+			</main>
+		</div>
+	);
+}

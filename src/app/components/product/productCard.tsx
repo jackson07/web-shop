@@ -1,6 +1,6 @@
 import React from "react";
 import { BiBookmarkHeart, BiCartAdd } from "react-icons/bi";
-import formatCurrency from "../../utils/formatCurrency";
+import formatCurrency from "../../../utils/formatCurrency";
 
 interface ProductCardProps {
     title: string,

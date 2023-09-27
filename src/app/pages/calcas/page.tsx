@@ -1,4 +1,4 @@
-import Header from "@/app/header/header";
+import Header from "@/app/components/header/header";
 import React from "react";
 
 export default function Calcas() {

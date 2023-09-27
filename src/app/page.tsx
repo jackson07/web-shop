@@ -1,6 +1,6 @@
 import React from "react";
-import ProductCard from "./Product/ProductCard";
-import Header from "./header/header";
+import ProductCard from "./components/product/productCard";
+import Header from "./components/header/header";
 
 export default function Home() {
 	return (
