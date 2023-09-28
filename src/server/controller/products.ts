@@ -2,9 +2,9 @@ import { productsRepository } from "../repository/products";
 import { ProductSchema } from "../schema/product";
 
 async function create(req: Request) {
-	console.log("df");
-	const body = ProductSchema.safeParse(await req.json()); 
-	console.log("aaa");
+	console.log("passando por aqui");
+	const body = await req.json(); //ProductSchema.safeParse(await req.json()); 
+	console.log("aaa", body.success);
 	if(!body.success) {
 		return new Response(
 			JSON.stringify({
@@ -46,6 +46,16 @@ async function create(req: Request) {
 			}
 		);
 	}
+	// return new Response(
+	// 	JSON.stringify({
+	// 		product: {
+	// 			name: "dfsdf",
+	// 			description: "dfsdf",
+	// 			value: 123123,
+	// 			photo: "dssd",
+	// 		},
+	// 	})
+	// );
 }
 
 export const productController = {

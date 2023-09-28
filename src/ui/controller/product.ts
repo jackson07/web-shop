@@ -25,7 +25,7 @@ async function create({
 
 		ProductSchema.parse(product);    
 		await productsRepository.createProduct(name, description, value, photo);
-
+        
 		onSuccess("Cadastro realizado com sucesso!");
 	} catch (error) {
 		if (error instanceof schema.ZodError) {
