@@ -31,7 +31,7 @@ export default function Produtos() {
 			description: descriprionInputRef.current?.value as string,
 			value: Number(valueInputRef.current?.value),
 			photo: selectedImage as string,
-			onSucess(message) {
+			onSuccess(message) {
 				alert(message);
 				// Limpar os campos e a imagem selecionada após o envio
                 productInputRef.current!.value = "";
@@ -45,7 +45,7 @@ export default function Produtos() {
 			}
 		});   
 	};
-    
+
 	return (
 		<div>
 			<Header />

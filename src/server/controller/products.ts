@@ -1,15 +1,30 @@
 import { productsRepository } from "../repository/products";
+import { ProductSchema } from "../schema/product";
 
 async function create(req: Request) {
-	const body = await req.json();   
-	console.log("paso aqui",req);
-	console.log(body.name, "foooooon");
+	console.log("df");
+	const body = ProductSchema.safeParse(await req.json()); 
+	console.log("aaa");
+	if(!body.success) {
+		return new Response(
+			JSON.stringify({
+				error: {
+					message: "You need to provide a data to create a product",
+					description: body.error.issues,
+				},
+			}),
+			{
+				status: 400,
+			}  
+		);
+	}
+    
 	try {        
 		const createProduct = await productsRepository.createProduct(
-			body.name,
-			body.description, 
-			body.value, 
-			body.photo
+			body.data.name,
+			body.data.description, 
+			body.data.value, 
+			body.data.photo
 		);
 		return new Response(
 			JSON.stringify({
@@ -23,7 +38,7 @@ async function create(req: Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "Failed to create todo",
+					message: "Failed to create a product",
 				},
 			}),
 			{
@@ -31,16 +46,6 @@ async function create(req: Request) {
 			}
 		);
 	}
-	// return new Response(
-	// 	JSON.stringify({
-	// 		product: {
-	// 			name: "dfsdf",
-	// 			description: "dfsdf",
-	// 			value: 123123,
-	// 			photo: "dssd",
-	// 		},
-	// 	})
-	// );
 }
 
 export const productController = {
