@@ -22,20 +22,36 @@ export default function Produtos() {
 		}
 	};
 
+	const handleSubmit = (event: React.FormEvent) => {
+		event.preventDefault();
+        
+		// Enviar os dados para o controller
+		productController.create({
+			name: productInputRef.current?.value as string,
+			description: descriprionInputRef.current?.value as string,
+			value: Number(valueInputRef.current?.value),
+			photo: selectedImage as string,
+			onSucess(message) {
+				alert(message);
+				// Limpar os campos e a imagem selecionada após o envio
+                productInputRef.current!.value = "";
+                descriprionInputRef.current!.value = "";
+                valueInputRef.current!.value = "";
+                imageInputRef.current!.value = "";
+                setSelectedImage(null);
+			},
+			onError(message){
+				alert(message);  
+			}
+		});   
+	};
+    
 	return (
 		<div>
 			<Header />
 			<main className="min-h-screen flex items-center justify-center">	
 				<form
-					onSubmit={(event) => {
-						event.preventDefault();
-						productController.create({
-							name: productInputRef.current?.value as string,
-							description: descriprionInputRef.current?.value as string,
-							value: Number(valueInputRef.current?.value),
-							photo: selectedImage as string,
-						});
-					}}
+					onSubmit={handleSubmit}
 					className="bg-white p-8 rounded-lg shadow-md w-auto">
 					<h2 className="text-2xl font-semibold mb-4">Cadastro de Produto!</h2>
 					<div className="flex justify-between space-x-10">
