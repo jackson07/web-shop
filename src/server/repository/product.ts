@@ -11,10 +11,11 @@ async function createProduct(name:string, description: string, value: number, ph
 		},])
 		.select()
 		.single();
-	console.log(error);
 	if (error) throw new Error("Failed to create product");
 	
-	return data;
+	// const parsedData = ProductSchema.safeParse(data.id);
+
+	return data.id;
 }
 
 export const productsRepository = {

@@ -1,6 +1,3 @@
-import { ProductSchema } from "../schema/product";
-import { z as schema } from "zod";
-
 async function createProduct(
 	name : string, 
 	description : string, 
@@ -19,18 +16,18 @@ async function createProduct(
 	if(response.ok){
 		// return await response.json();
 		const serverResponse = await response.json();
-		const ServerResponseSchema = schema.object({
-			product: ProductSchema,
-		});
-		console.log(serverResponse);
-		const serverResponseParsed = ServerResponseSchema.safeParse(serverResponse);
-		if (!serverResponseParsed.success) {
-			throw new Error("Failed to create a new Product :(");
-		}
+		// console.log("srv response",serverResponse);
+		// const ServerResponseSchema = schema.object({
+		// 	id: schema.string(),
+		// });
+		// const serverResponseParsed = ServerResponseSchema.safeParse(serverResponse.data);
+		// console.log("chegoooooooo", serverResponse.data);
+		// if (!serverResponseParsed.success) {
+		// 	throw new Error("Failed to create a new Product :(");
+		// }
 
-		return serverResponseParsed;
+		return serverResponse;
 	}
-	console.log("aqui 32 repository/UI");
 	throw new Error("Failed to create a new Product :(");
 }
 

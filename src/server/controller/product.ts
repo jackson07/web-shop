@@ -1,10 +1,17 @@
-import { productsRepository } from "../repository/products";
-import { ProductSchema } from "../schema/product";
+import { productsRepository } from "../repository/product";
+import { z as schema } from "zod";
+// import { ProductSchema } from "../schema/product";
+
+const ProductCreateSchema = schema.object({
+	// id: schema.string().uuid(),
+	name : schema.string().min(1),
+	description : schema.string().min(1),
+	value : schema.number().min(1),
+	photo : schema.string(),
+});
 
 async function create(req: Request) {
-	console.log("passando por aqui");
-	const body = await req.json(); //ProductSchema.safeParse(await req.json()); 
-	console.log("aaa", body.success);
+	const body = ProductCreateSchema.safeParse(await req.json()); 
 	if(!body.success) {
 		return new Response(
 			JSON.stringify({
@@ -18,9 +25,9 @@ async function create(req: Request) {
 			}  
 		);
 	}
-    
+        
 	try {        
-		const createProduct = await productsRepository.createProduct(
+		const createProductId = await productsRepository.createProduct(
 			body.data.name,
 			body.data.description, 
 			body.data.value, 
@@ -28,7 +35,7 @@ async function create(req: Request) {
 		);
 		return new Response(
 			JSON.stringify({
-				produts: createProduct
+				id: createProductId
 			}),
 			{
 				status: 201,

@@ -1,6 +1,5 @@
-import { productController } from "@/server/controller/products";
+import { productController } from "@/server/controller/product";
 
 export async function POST(request: Request) {
-	console.log("faz o post");
 	return await productController.create(request);    
 }

@@ -22,11 +22,11 @@ async function create({
 			value,
 			photo
 		};    
-
+		//fail fast
 		ProductSchema.parse(product);    
-		await productsRepository.createProduct(name, description, value, photo);
-        
-		onSuccess("Cadastro realizado com sucesso!");
+
+		await productsRepository.createProduct(name, description, value, photo);        
+		onSuccess("Cadastro realizado com sucesso!");        
 	} catch (error) {
 		if (error instanceof schema.ZodError) {
 			const fieldErrors = error.errors.map(err => ({
@@ -37,7 +37,7 @@ async function create({
 			fieldErrors.forEach(({ path }) => {
 				fields += String(path)+" ";
 			});
-			onError(`Deu errado! Algum campo não está correto. Campo: ${fields}`);
+			onError(`Deu errado! Verifique o campo: ${fields}`);
 		} else {
 			console.error("An unexpected error occurred:", error);
 			onError("Deu errado! :(");
