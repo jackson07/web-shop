@@ -12,8 +12,6 @@ async function createProduct(name:string, description: string, value: number, ph
 		.select()
 		.single();
 	if (error) throw new Error("Failed to create product");
-	
-	// const parsedData = ProductSchema.safeParse(data.id);
 
 	return data.id;
 }

@@ -1,9 +1,7 @@
 import { productsRepository } from "../repository/product";
 import { z as schema } from "zod";
-// import { ProductSchema } from "../schema/product";
 
 const ProductCreateSchema = schema.object({
-	// id: schema.string().uuid(),
 	name : schema.string().min(1),
 	description : schema.string().min(1),
 	value : schema.number().min(1),
@@ -53,16 +51,6 @@ async function create(req: Request) {
 			}
 		);
 	}
-	// return new Response(
-	// 	JSON.stringify({
-	// 		product: {
-	// 			name: "dfsdf",
-	// 			description: "dfsdf",
-	// 			value: 123123,
-	// 			photo: "dssd",
-	// 		},
-	// 	})
-	// );
 }
 
 export const productController = {
