@@ -1,46 +1,59 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import ProductCard from "./components/product/productCard";
 import Header from "./components/header/header";
+import { productController } from "@/ui/controller/product";
+
+interface HomeProduct {
+    id: string;
+    name: string;
+    description: string;
+    value: number;
+    photo: string;
+}
 
 export default function Home() {
+	const initialLoadComplete = useRef(false);
+	const [products,setProducts] = useState<HomeProduct[]>([]);
+	const [page, setPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(0);
+
+	useEffect(() => {		
+		if (!initialLoadComplete.current) {
+			productController
+				.get({ page })
+				.then(({products, pages}) => {
+					setProducts(products);
+					setTotalPages(pages);
+				})
+				.finally(() => {
+					initialLoadComplete.current = true;
+				});
+		}
+	}, [page]);
+
+	console.log(totalPages, products);
+    
+	function handleClick(){
+		setPage(1);
+	}
+
 	return (
 		<div>			
 			<Header/>
 			<main className="min-h-screen">
 				<div className="grid grid-cols-4 gap-3 p-20">
-					<ProductCard 
-						title="Calça e Camisa" 
-						description="Calça e camisa, calça e camisa calça e camisa. Acompanha calça e camisa." 
-						price={100.50}/>
-					<ProductCard 
-						title="Blusa Manga Longa" 
-						description="Blusa Manga Longa, Blusa Manga Longa Blusa Manga Longa Blusa Manga Longa." 
-						price={99.90}/>
-					<ProductCard 
-						title="Shorts verão" 
-						description="Shorts verão, Shorts verão e Shorts verão. Shorts verão, Shorts verão." 
-						price={158.60}/>
-					<ProductCard 
-						title="Casado Estilo Size" 
-						description="Casado Estilo Size, Casado Estilo Size. Casado Estilo Size. Casado Estilo Size." 
-						price={199.99}/>
-					<ProductCard 
-						title="Calça e Camisa" 
-						description="Calça e camisa, calça e camisa calça e camisa. Acompanha calça e camisa." 
-						price={100.50}/>
-					<ProductCard 
-						title="Blusa Manga Longa" 
-						description="Blusa Manga Longa, Blusa Manga Longa Blusa Manga Longa Blusa Manga Longa." 
-						price={99.90}/>
-					<ProductCard 
-						title="Shorts verão" 
-						description="Shorts verão, Shorts verão e Shorts verão. Shorts verão, Shorts verão." 
-						price={158.60}/>
-					<ProductCard 
-						title="Casado Estilo Size" 
-						description="Casado Estilo Size, Casado Estilo Size. Casado Estilo Size. Casado Estilo Size." 
-						price={199.99}/>
-				</div>
+					{products.map((product) => {
+						return (
+							<ProductCard 
+								key={product.id}
+								title={product.name} 
+								description={product.description}
+								price={product.value}/>  
+						);
+					})}					
+				</div>				
+				<button onClick={handleClick}>{page}</button>
 			</main>
 			<footer className="h-6 w-full bg-gray-400">
 				<div className="flex items-center justify-center">@ create by Jack</div>

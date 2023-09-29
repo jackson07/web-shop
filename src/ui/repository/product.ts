@@ -1,3 +1,22 @@
+interface ProductRepositoryGetParams {
+    page: number;
+    limit: number;
+}
+
+interface RepositoryProduct {
+    id: string;
+    name: string;
+    description: string;
+    value: number;
+    photo: string;
+}
+
+interface ProductRepositoryGetOutput {
+    products: RepositoryProduct[];
+    total: number;
+    pages: number;
+}
+
 async function createProduct(
 	name : string, 
 	description : string, 
@@ -14,23 +33,31 @@ async function createProduct(
 	});	
     
 	if(response.ok){
-		// return await response.json();
 		const serverResponse = await response.json();
-		// console.log("srv response",serverResponse);
-		// const ServerResponseSchema = schema.object({
-		// 	id: schema.string(),
-		// });
-		// const serverResponseParsed = ServerResponseSchema.safeParse(serverResponse.data);
-		// console.log("chegoooooooo", serverResponse.data);
-		// if (!serverResponseParsed.success) {
-		// 	throw new Error("Failed to create a new Product :(");
-		// }
 
 		return serverResponse;
 	}
 	throw new Error("Failed to create a new Product :(");
 }
 
-export const productsRepository = {
+async function get({page, limit,}: ProductRepositoryGetParams): Promise<ProductRepositoryGetOutput> {
+	const response = await fetch(`/api/products?page=${page}&limit=${limit}`);
+  
+	if (!response.ok) {
+		throw new Error(`Failed to fetch products. Status: ${response.status}`);
+	}
+
+	const responseData = await response.json();
+	const products = responseData.products as RepositoryProduct[]; // Extract the products array
+
+	return {
+		total: responseData.total,
+		pages: responseData.pages,
+		products: products,
+	};
+}
+
+export const productRepository = {
 	createProduct,
+	get,
 };

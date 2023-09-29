@@ -1,4 +1,4 @@
-import { productsRepository } from "../repository/product";
+import { productRepository } from "../repository/product";
 import { ProductSchema, Product } from "../schema/product";
 import { z as schema } from "zod";
 
@@ -9,6 +9,10 @@ interface ProductControllerGetParams {
     photo : string;
     onSuccess: (sucessMessage : string) => void;
     onError: (errorMessage: string) => void;
+}
+
+interface ProductsControllerGetParams {
+    page: number;
 }
 
 async function create({
@@ -25,7 +29,7 @@ async function create({
 		//fail fast
 		ProductSchema.parse(product);    
 
-		await productsRepository.createProduct(name, description, value, photo);        
+		await productRepository.createProduct(name, description, value, photo);        
 		onSuccess("Cadastro realizado com sucesso!");        
 	} catch (error) {
 		if (error instanceof schema.ZodError) {
@@ -44,7 +48,12 @@ async function create({
 		}
 	}
 }
+
+async function get({ page }: ProductsControllerGetParams) {
+	return productRepository.get({ page: page || 1, limit: 8 });
+}
     
 export const productController = {
 	create,
+	get,
 };
