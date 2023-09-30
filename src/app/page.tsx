@@ -17,7 +17,7 @@ export default function Home() {
 	const [products,setProducts] = useState<HomeProduct[]>([]);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(0);
-	const [isLoading, setIsLoading] = React.useState(true);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {		
 		if (!initialLoadComplete.current) {
