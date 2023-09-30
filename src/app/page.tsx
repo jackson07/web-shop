@@ -17,6 +17,7 @@ export default function Home() {
 	const [products,setProducts] = useState<HomeProduct[]>([]);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(0);
+	const [isLoading, setIsLoading] = React.useState(true);
 
 	useEffect(() => {		
 		if (!initialLoadComplete.current) {
@@ -27,21 +28,22 @@ export default function Home() {
 					setTotalPages(pages);
 				})
 				.finally(() => {
+					setPage(1);
+					setIsLoading(false);
 					initialLoadComplete.current = true;
 				});
 		}
 	}, [page]);
 
-	console.log(totalPages, products);
-    
-	function handleClick(){
-		setPage(1);
-	}
-
 	return (
 		<div>			
 			<Header/>
-			<main className="min-h-screen">
+			<main className="min-h-screen flex flex-col items-center justify-center">
+				{isLoading && (
+					<div className="p-20">
+						<h2>Carregando...</h2>
+					</div>
+				)}
 				<div className="grid grid-cols-4 gap-3 p-20">
 					{products.map((product) => {
 						return (
@@ -49,11 +51,13 @@ export default function Home() {
 								key={product.id}
 								title={product.name} 
 								description={product.description}
-								price={product.value}/>  
+								price={product.value}/>                                  
 						);
 					})}					
 				</div>				
-				<button onClick={handleClick}>{page}</button>
+				<div className="flex items-center justify-center pt-40">
+					<p>{page} / {totalPages}</p>
+				</div>
 			</main>
 			<footer className="h-6 w-full bg-gray-400">
 				<div className="flex items-center justify-center">@ create by Jack</div>
