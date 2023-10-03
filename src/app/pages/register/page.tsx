@@ -115,7 +115,7 @@ export default function Produtos() {
 							</div>
 						)}
 					</div>
-					<div className="flex items-center justify-between p-6">
+					<div className="flex items-center space-x-40 p-6 left-0">
 						<button 
 							type="submit" 
 							className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600">

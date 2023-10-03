@@ -48,8 +48,7 @@ async function get({page, limit,}: ProductRepositoryGetParams): Promise<ProductR
 	}
 
 	const responseData = await response.json();
-	const products = responseData.products as RepositoryProduct[]; // Extract the products array
-
+	const products = responseData.products as RepositoryProduct[];
 	return {
 		total: responseData.total,
 		pages: responseData.pages,
