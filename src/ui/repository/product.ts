@@ -22,7 +22,7 @@ async function createProduct(
 	description : string, 
 	value : number, 
 	photo : File
-) {
+) {  
 	const response = await fetch("../api/products", {
 		method: "POST",
 		headers: {
@@ -31,7 +31,6 @@ async function createProduct(
 		},
 		body: JSON.stringify({ name, description, value, photo }),
 	});	
-	console.log("fon");
     
 	if(response.ok){
 		const serverResponse = await response.json();

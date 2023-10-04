@@ -2,7 +2,10 @@ import { productRepository } from "../repository/product";
 import { ProductCreateSchema } from "../schema/product";
  
 async function create(req: Request) {
+	const data = await req.formData();
+	console.log("fon",data);
 	const body = ProductCreateSchema.safeParse(await req.json()); 
+	console.log("fonzadas");
 	if(!body.success) {
 		return new Response(
 			JSON.stringify({
