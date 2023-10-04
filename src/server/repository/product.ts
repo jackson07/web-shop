@@ -12,20 +12,33 @@ interface ProductRepositoryGetOutPut {
     pages: number;
 }
 
-async function createProduct(name:string, description: string, value: number, photo: string) {
-	const { data, error } = await supabase()
-		.from("Products")
-		.insert([{
-			name,
-			description,
-			value,
-			photo
-		},])
-		.select()
-		.single();
-	if (error) throw new Error("Failed to create product");
+async function createProduct(name:string, description: string, value: number, photo: File) {
+	try {
+		const { data, error } = await supabase()
+			.from("Products")
+			.insert([{
+				name,
+				description,
+				value,
+				photo
+			},])
+			.select()
+			.single();
+		if (error) throw new Error("Failed to create product");
 
-	return data.id;
+		const storageResponse = await supabase()
+			.storage
+			.from("images")
+			.upload(photo.name, photo);
+
+		if (storageResponse.error) throw new Error("Failed to upload photo");
+
+		return data.id;
+	} catch (e) {
+		const errorMessage = e instanceof Error ? e.message : "Unknown error";
+		console.error("An error occurred:", errorMessage);
+		throw new Error("Failed to create product"+errorMessage);
+	}
 }
 
 async function get({

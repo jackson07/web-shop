@@ -1,13 +1,6 @@
 import { productRepository } from "../repository/product";
-import { z as schema } from "zod";
-
-const ProductCreateSchema = schema.object({
-	name : schema.string().min(1),
-	description : schema.string().min(1),
-	value : schema.number().min(1),
-	photo : schema.string(),
-});
-
+import { ProductCreateSchema } from "../schema/product";
+ 
 async function create(req: Request) {
 	const body = ProductCreateSchema.safeParse(await req.json()); 
 	if(!body.success) {
@@ -24,12 +17,14 @@ async function create(req: Request) {
 		);
 	}
         
-	try {        
+	try {     
+		const fileData = body.data.photo;
+		const fileParsed: File = new File([], fileData.filename, { type: fileData.mimetype });
 		const createProductId = await productRepository.createProduct(
 			body.data.name,
 			body.data.description, 
 			body.data.value, 
-			body.data.photo
+			fileParsed
 		);
 		return new Response(
 			JSON.stringify({

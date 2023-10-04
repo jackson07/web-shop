@@ -9,7 +9,7 @@ interface HomeProduct {
     name: string;
     description: string;
     value: number;
-    photo: string;
+    photo: File;
 }
 
 export default function Home() {

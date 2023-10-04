@@ -6,12 +6,14 @@ import { productController } from "@/ui/controller/product";
 
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
+	const [image, setImage] = useState<File>();
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const valueInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
+    
 
-	const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target?.files?.[0];
 		if (file) {
 			const reader = new FileReader();
@@ -20,20 +22,18 @@ export default function Produtos() {
 			};
 			reader.readAsDataURL(file);
 		}
+		setImage(file);
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
-		event.preventDefault();
-        
-		// Enviar os dados para o controller
+		event.preventDefault();		
 		productController.create({
 			name: productInputRef.current?.value as string,
 			description: descriprionInputRef.current?.value as string,
 			value: Number(valueInputRef.current?.value),
-			photo: selectedImage as string,
+			photo: image as File,
 			onSuccess(message) {
 				alert(message);
-				// Limpar os campos e a imagem selecionada após o envio
                 productInputRef.current!.value = "";
                 descriprionInputRef.current!.value = "";
                 valueInputRef.current!.value = "";
@@ -98,7 +98,7 @@ export default function Produtos() {
 									type="file" 
 									accept="image/*" 
 									ref={imageInputRef}
-									onChange={handlePhotoChange} 
+									onChange={(e) => {handleImage(e);}} 
 									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>						
 							</div>
 						</div>					

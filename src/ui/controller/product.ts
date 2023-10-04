@@ -1,12 +1,12 @@
 import { productRepository } from "../repository/product";
-import { ProductSchema, Product } from "../schema/product";
+import { ProductSchema, Product, FileSchema } from "../schema/product";
 import { z as schema } from "zod";
 
 interface ProductControllerGetParams {
     name: string;
     description : string;
     value : number;
-    photo : string;
+    photo : File;
     onSuccess: (sucessMessage : string) => void;
     onError: (errorMessage: string) => void;
 }
@@ -20,15 +20,23 @@ async function create({
 }: ProductControllerGetParams) {
 	let fields = "";
 	try {
+		const fileData = {
+			filename: photo.name,
+			mimetype: photo.type,
+			encoding: "base64",
+		};
+        
+		FileSchema.parse(fileData);
+        
 		const product: Product = {
 			name,
 			description,
 			value,
-			photo
-		};    
+			photo: fileData,
+		};  
 		//fail fast
 		ProductSchema.parse(product);    
-
+        
 		await productRepository.createProduct(name, description, value, photo);        
 		onSuccess("Cadastro realizado com sucesso!");        
 	} catch (error) {

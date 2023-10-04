@@ -8,7 +8,7 @@ interface RepositoryProduct {
     name: string;
     description: string;
     value: number;
-    photo: string;
+    photo: File;
 }
 
 interface ProductRepositoryGetOutput {
@@ -21,7 +21,7 @@ async function createProduct(
 	name : string, 
 	description : string, 
 	value : number, 
-	photo : string
+	photo : File
 ) {
 	const response = await fetch("../api/products", {
 		method: "POST",
@@ -31,6 +31,7 @@ async function createProduct(
 		},
 		body: JSON.stringify({ name, description, value, photo }),
 	});	
+	console.log("fon");
     
 	if(response.ok){
 		const serverResponse = await response.json();
