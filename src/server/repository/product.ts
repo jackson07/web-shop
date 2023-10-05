@@ -49,7 +49,7 @@ async function get({
 	const currentLimit = limit || 10;
 	const startIndex = (currentPage - 1) * currentLimit;
 	const endIndex = currentPage * currentLimit - 1;
-    
+	
 	const { data, error, count } = await supabase()
 		.from("Products")
 		.select("*", {
@@ -58,12 +58,12 @@ async function get({
 		.range(startIndex,endIndex);
 
 	if(error) throw new Error("Failed to fetch data.");
-
 	const parsedData = ProductSchema.array().safeParse(data);
-
+	console.log("conteudo", data);
 	if (!parsedData.success)
 		throw new Error("Failed to parsed produts from database");
 
+	console.log("testtttte",page);
 	const products = parsedData.data;
 	const total = count || products.length;
 	const totalPages = Math.ceil(total / currentLimit);

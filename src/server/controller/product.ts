@@ -59,7 +59,6 @@ async function get(req: Request) {
 	};
 	const page = Number(query.page);
 	const limit = Number(query.limit);
-
 	if (query.page && isNaN(page)) {
 		return new Response(
 			JSON.stringify({
@@ -71,7 +70,7 @@ async function get(req: Request) {
 				status: 400,
 			}
 		);
-	}
+	}        
 	
 	if (query.limit && isNaN(limit)) {
 		return new Response(
