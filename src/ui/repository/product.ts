@@ -17,26 +17,40 @@ interface ProductRepositoryGetOutput {
     pages: number;
 }
 
-async function createProduct(
-	name : string, 
-	description : string, 
-	value : number, 
-	photo : File
-) {  
+// async function createProduct(
+// 	name : string, 
+// 	description : string, 
+// 	value : number, 
+// 	photo : File
+// ) {  
+// 	const response = await fetch("../api/products", {
+// 		method: "POST",
+// 		headers: {
+// 			//MIME Type
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify({ name, description, value, photo }),
+// 	});	
+    
+// 	if(response.ok){
+// 		const serverResponse = await response.json();
+
+// 		return serverResponse;
+// 	}
+// 	throw new Error("Failed to create a new Product :(");
+// }
+
+async function createProduct(formData: FormData) {
 	const response = await fetch("../api/products", {
 		method: "POST",
-		headers: {
-			//MIME Type
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ name, description, value, photo }),
-	});	
-    
-	if(response.ok){
+		body: formData,
+	});
+  
+	if (response.ok) {
 		const serverResponse = await response.json();
-
 		return serverResponse;
 	}
+  
 	throw new Error("Failed to create a new Product :(");
 }
 

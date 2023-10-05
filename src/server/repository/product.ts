@@ -13,31 +13,32 @@ interface ProductRepositoryGetOutPut {
 }
 
 async function createProduct(name:string, description: string, value: number, photo: File) {
-	try {
+	try {    
 		const { data, error } = await supabase()
 			.from("Products")
-			.insert([{
-				name,
-				description,
-				value,
-				photo
-			},])
-			.select()
+			.insert([
+				{
+					name,
+					description,
+					value,
+				},
+			])
+			.select("id")
 			.single();
+    
 		if (error) throw new Error("Failed to create product");
-
+    
 		const storageResponse = await supabase()
-			.storage
-			.from("images")
+			.storage.from("images")
 			.upload(photo.name, photo);
-
+    
 		if (storageResponse.error) throw new Error("Failed to upload photo");
-
+    
 		return data.id;
 	} catch (e) {
 		const errorMessage = e instanceof Error ? e.message : "Unknown error";
 		console.error("An error occurred:", errorMessage);
-		throw new Error("Failed to create product"+errorMessage);
+		throw new Error("Failed to create product" + errorMessage);
 	}
 }
 
@@ -59,11 +60,10 @@ async function get({
 
 	if(error) throw new Error("Failed to fetch data.");
 	const parsedData = ProductSchema.array().safeParse(data);
-	console.log("conteudo", data);
+    
 	if (!parsedData.success)
 		throw new Error("Failed to parsed produts from database");
 
-	console.log("testtttte",page);
 	const products = parsedData.data;
 	const total = count || products.length;
 	const totalPages = Math.ceil(total / currentLimit);

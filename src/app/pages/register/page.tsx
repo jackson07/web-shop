@@ -11,7 +11,6 @@ export default function Produtos() {
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const valueInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
-	const [formData, setFormData] = React.useState<FormData>({ product: "", description: 0,  });
     
 	const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target?.files?.[0];
@@ -27,11 +26,7 @@ export default function Produtos() {
 
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();	
-        
-		const formData = new FormData(event.currentTarget);
-		console.log("form",formData);
-
-
+		console.log("imageInputRef.current!.value",imageInputRef.current!.value);
 		productController.create({
 			name: productInputRef.current?.value as string,
 			description: descriprionInputRef.current?.value as string,

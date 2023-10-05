@@ -2,16 +2,31 @@ import { productRepository } from "../repository/product";
 import { ProductCreateSchema } from "../schema/product";
  
 async function create(req: Request) {
-	const data = await req.formData();
-	console.log("fon",data);
-	const body = ProductCreateSchema.safeParse(await req.json()); 
-	console.log("fonzadas");
-	if(!body.success) {
+	const formData = await req.formData();
+	const name = formData.get("product") as string;
+	const description = formData.get("description") as string;
+	const value = Number(formData.get("value"));
+	const photo = formData.get("photo") as File;
+
+	const productData = {
+		name,
+		description,
+		value,
+		photo: {
+			filename: photo.name,
+			mimetype: photo.type,
+			encoding: "base64", // You can modify this based on your needs
+		},
+	};
+
+	// Validate using Zod Schema
+	const data = ProductCreateSchema.safeParse(productData);
+	if(!data.success) {
 		return new Response(
 			JSON.stringify({
 				error: {
 					message: "You need to provide a data to create a product",
-					description: body.error.issues,
+					description: data.error.issues,
 				},
 			}),
 			{
@@ -19,16 +34,10 @@ async function create(req: Request) {
 			}  
 		);
 	}
-        
-	try {     
-		const fileData = body.data.photo;
-		const fileParsed: File = new File([], fileData.filename, { type: fileData.mimetype });
-		const createProductId = await productRepository.createProduct(
-			body.data.name,
-			body.data.description, 
-			body.data.value, 
-			fileParsed
-		);
+
+	const createProductId = await productRepository.createProduct(name, description, value, photo);
+    
+	try {  
 		return new Response(
 			JSON.stringify({
 				id: createProductId

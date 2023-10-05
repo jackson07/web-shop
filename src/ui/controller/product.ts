@@ -26,7 +26,8 @@ async function create({
 			encoding: "base64",
 		};
         
-		FileSchema.parse(fileData);
+		FileSchema.safeParse(fileData);
+		console.log("passou aqui",fileData);
         
 		const product: Product = {
 			name,
@@ -37,7 +38,13 @@ async function create({
 		//fail fast
 		ProductSchema.parse(product);    
         
-		await productRepository.createProduct(name, description, value, photo);        
+		const formData = new FormData();
+		formData.append("product", name);
+		formData.append("description", description);
+		formData.append("value", String(value));
+		formData.append("photo", photo as File);
+
+		await productRepository.createProduct(formData);        
 		onSuccess("Cadastro realizado com sucesso!");        
 	} catch (error) {
 		if (error instanceof schema.ZodError) {
