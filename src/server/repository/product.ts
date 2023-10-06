@@ -12,20 +12,35 @@ interface ProductRepositoryGetOutPut {
     pages: number;
 }
 
-async function createProduct(name:string, description: string, value: number, photo: string) {
-	const { data, error } = await supabase()
-		.from("Products")
-		.insert([{
-			name,
-			description,
-			value,
-			photo
-		},])
-		.select()
-		.single();
-	if (error) throw new Error("Failed to create product");
-
-	return data.id;
+async function createProduct(name:string, description: string, value: number, photo: string, file: File) {
+	try {    
+		const { data, error } = await supabase()
+			.from("Products")
+			.insert([
+				{
+					name,
+					description,
+					photo,
+					value,
+				},
+			])
+			.select("id")
+			.single();
+    
+		if (error) throw new Error("Failed to create product");
+    
+		await supabase()
+			.storage.from("images")
+			.upload(file.name, file);
+    
+		//if (storageResponse.error) throw new Error("Failed to upload photo"); //caso precise validar se a imagem existe. Nesse caso, se existir somente ignora
+    
+		return data.id;
+	} catch (e) {
+		const errorMessage = e instanceof Error ? e.message : "Unknown error";
+		console.error("An error occurred:", errorMessage);
+		throw new Error("Failed to create product" + errorMessage);
+	}
 }
 
 async function get({
@@ -36,7 +51,7 @@ async function get({
 	const currentLimit = limit || 10;
 	const startIndex = (currentPage - 1) * currentLimit;
 	const endIndex = currentPage * currentLimit - 1;
-    
+	
 	const { data, error, count } = await supabase()
 		.from("Products")
 		.select("*", {
@@ -45,7 +60,6 @@ async function get({
 		.range(startIndex,endIndex);
 
 	if(error) throw new Error("Failed to fetch data.");
-
 	const parsedData = ProductSchema.array().safeParse(data);
 
 	if (!parsedData.success)
