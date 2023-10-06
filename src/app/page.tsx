@@ -14,7 +14,7 @@ interface HomeProduct {
 
 export default function Home() {
 	const initialLoadComplete = useRef(false);
-	const [products,setProducts] = useState<HomeProduct[]>([]);
+	const [products, setProducts] = useState<HomeProduct[]>([]);
 	const [page, setPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
 	const [isLoading, setIsLoading] = useState(true);

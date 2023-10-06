@@ -26,7 +26,6 @@ export default function Produtos() {
 
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();	
-		console.log("imageInputRef.current!.value",imageInputRef.current!.value);
 		productController.create({
 			name: productInputRef.current?.value as string,
 			description: descriprionInputRef.current?.value as string,
@@ -39,6 +38,7 @@ export default function Produtos() {
                 valueInputRef.current!.value = "";
                 imageInputRef.current!.value = "";
                 setSelectedImage(null);
+                setImage(undefined);
 			},
 			onError(message){
 				alert(message);  

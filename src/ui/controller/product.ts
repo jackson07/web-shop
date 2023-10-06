@@ -1,6 +1,5 @@
 import { productRepository } from "../repository/product";
 import { ProductSchema, Product, FileSchema } from "../schema/product";
-import { z as schema } from "zod";
 
 interface ProductControllerGetParams {
     name: string;
@@ -18,16 +17,18 @@ interface ProductsControllerGetParams {
 async function create({
 	name, description, value, photo, onSuccess, onError
 }: ProductControllerGetParams) {
-	let fields = "";
 	try {
+		if (!(photo instanceof File)) {
+			throw new Error("Necessário escolher uma imagem!.");
+		}
+        
 		const fileData = {
-			filename: photo.name,
-			mimetype: photo.type,
+			filename: photo.name || "",
+			mimetype: photo.type || "",
 			encoding: "base64",
 		};
         
 		FileSchema.safeParse(fileData);
-		console.log("passou aqui",fileData);
         
 		const product: Product = {
 			name,
@@ -35,9 +36,13 @@ async function create({
 			value,
 			photo: fileData,
 		};  
-		//fail fast
-		ProductSchema.parse(product);    
         
+		//fail fast
+		const parsedProds = ProductSchema.safeParse(product);            
+		if (!parsedProds.success) {
+			throw new Error("Preencha todos os campos!");
+		}
+
 		const formData = new FormData();
 		formData.append("product", name);
 		formData.append("description", description);
@@ -47,19 +52,9 @@ async function create({
 		await productRepository.createProduct(formData);        
 		onSuccess("Cadastro realizado com sucesso!");        
 	} catch (error) {
-		if (error instanceof schema.ZodError) {
-			const fieldErrors = error.errors.map(err => ({
-				path: err.path,
-				message: err.message
-			}));
-			console.error("Validation errors:", fieldErrors);
-			fieldErrors.forEach(({ path }) => {
-				fields += String(path)+" ";
-			});
-			onError(`Deu errado! Verifique o campo: ${fields}`);
-		} else {
+		if(error instanceof Error){
 			console.error("An unexpected error occurred:", error);
-			onError("Deu errado! :(");
+			onError("Erro ao inserir produto! "+error.message);    
 		}
 	}
 }

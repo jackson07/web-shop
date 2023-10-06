@@ -12,7 +12,7 @@ interface ProductRepositoryGetOutPut {
     pages: number;
 }
 
-async function createProduct(name:string, description: string, value: number, photo: File) {
+async function createProduct(name:string, description: string, value: number, photo: string, file: File) {
 	try {    
 		const { data, error } = await supabase()
 			.from("Products")
@@ -20,6 +20,7 @@ async function createProduct(name:string, description: string, value: number, ph
 				{
 					name,
 					description,
+					photo,
 					value,
 				},
 			])
@@ -28,11 +29,11 @@ async function createProduct(name:string, description: string, value: number, ph
     
 		if (error) throw new Error("Failed to create product");
     
-		const storageResponse = await supabase()
+		await supabase()
 			.storage.from("images")
-			.upload(photo.name, photo);
+			.upload(file.name, file);
     
-		if (storageResponse.error) throw new Error("Failed to upload photo");
+		//if (storageResponse.error) throw new Error("Failed to upload photo"); //caso precise validar se a imagem existe. Nesse caso, se existir somente ignora
     
 		return data.id;
 	} catch (e) {
@@ -60,7 +61,7 @@ async function get({
 
 	if(error) throw new Error("Failed to fetch data.");
 	const parsedData = ProductSchema.array().safeParse(data);
-    
+
 	if (!parsedData.success)
 		throw new Error("Failed to parsed produts from database");
 

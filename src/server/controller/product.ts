@@ -25,7 +25,7 @@ async function create(req: Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "You need to provide a data to create a product",
+					message: "You need to provide a full data to create a product",
 					description: data.error.issues,
 				},
 			}),
@@ -35,8 +35,8 @@ async function create(req: Request) {
 		);
 	}
 
-	const createProductId = await productRepository.createProduct(name, description, value, photo);
-    
+	const createProductId = await productRepository.createProduct(name, description, value, photo.name, photo);
+
 	try {  
 		return new Response(
 			JSON.stringify({
