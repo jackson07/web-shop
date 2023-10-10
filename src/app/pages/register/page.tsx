@@ -3,10 +3,13 @@ import Header from "@/app/components/header/header";
 import React, { ChangeEvent, useState, useRef } from "react";
 import Link from "next/link";
 import { productController } from "@/ui/controller/product";
+import { NumericFormat } from "react-number-format";
+//import { TextField } from "@mui/material";
 
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 	const [image, setImage] = useState<File>();
+	const [value,setValue] = useState<number>();
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const valueInputRef = useRef<HTMLInputElement>(null);
@@ -22,6 +25,11 @@ export default function Produtos() {
 			reader.readAsDataURL(file);
 		}
 		setImage(file);
+	};
+
+	const handleValue = (event: ChangeEvent<number>) => {
+		const value = event.target.valueOf;
+		setValue(Number(value));
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
@@ -83,10 +91,21 @@ export default function Produtos() {
 								<label className="block text-gray-600 mb-1">
                                     Valor:
 								</label>
-								<input 
+								{/* <input 
 									type="number" 
 									ref={valueInputRef}
-									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>
+									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/> */}
+								<NumericFormat
+									value={value} // aqui você pode passar o valor atual do input
+									onValueChange={(e) => {handleValue(e);}}
+									thousandSeparator="."
+									decimalSeparator=","
+									decimalScale={2}
+									fixedDecimalScale={true}
+									allowNegative={false}
+									type="text"
+									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"
+								/>
 							</div>
 							<div 
 								className="mb-4">
