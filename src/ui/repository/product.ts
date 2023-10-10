@@ -8,7 +8,7 @@ interface RepositoryProduct {
     name: string;
     description: string;
     value: number;
-    photo: File;
+    photo: string;
 }
 
 interface ProductRepositoryGetOutput {

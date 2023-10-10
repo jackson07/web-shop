@@ -3,16 +3,15 @@ import Header from "@/app/components/header/header";
 import React, { ChangeEvent, useState, useRef } from "react";
 import Link from "next/link";
 import { productController } from "@/ui/controller/product";
-import { NumericFormat } from "react-number-format";
+import { NumberFormatValues, NumericFormat } from "react-number-format";
 //import { TextField } from "@mui/material";
 
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 	const [image, setImage] = useState<File>();
-	const [value,setValue] = useState<number>();
+	const [value,setValue] = useState<number>(0);
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
-	const valueInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
     
 	const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +26,8 @@ export default function Produtos() {
 		setImage(file);
 	};
 
-	const handleValue = (event: ChangeEvent<number>) => {
-		const value = event.target.valueOf;
+	const handleValue = (event: NumberFormatValues) => {
+		const value = event.value;
 		setValue(Number(value));
 	};
 
@@ -37,13 +36,13 @@ export default function Produtos() {
 		productController.create({
 			name: productInputRef.current?.value as string,
 			description: descriprionInputRef.current?.value as string,
-			value: Number(valueInputRef.current?.value),
+			value: Number(value),
 			photo: image as File,
 			onSuccess(message) {
 				alert(message);
                 productInputRef.current!.value = "";
                 descriprionInputRef.current!.value = "";
-                valueInputRef.current!.value = "";
+                setValue(0);
                 imageInputRef.current!.value = "";
                 setSelectedImage(null);
                 setImage(undefined);
@@ -91,12 +90,8 @@ export default function Produtos() {
 								<label className="block text-gray-600 mb-1">
                                     Valor:
 								</label>
-								{/* <input 
-									type="number" 
-									ref={valueInputRef}
-									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/> */}
 								<NumericFormat
-									value={value} // aqui você pode passar o valor atual do input
+									value={value}
 									onValueChange={(e) => {handleValue(e);}}
 									thousandSeparator="."
 									decimalSeparator=","

@@ -9,7 +9,7 @@ interface HomeProduct {
     name: string;
     description: string;
     value: number;
-    photo: File;
+    photo: string;
 }
 
 export default function Home() {
@@ -57,8 +57,51 @@ export default function Home() {
 						);
 					})}					
 				</div>				
-				<div className="flex items-center justify-center pt-40">
+				<div className="flex items-center justify-center pt-40 space-x-3">
 					<p>{page} / {totalPages}</p>
+					{page < totalPages && <button
+						data-type="load-more"
+						onClick={() => {
+							setIsLoading(true);
+							const nextPage = page + 1;
+							setPage(nextPage);
+							productController
+								.get({ page: nextPage })
+								.then(({ products, pages }) => {
+									setProducts(() => {
+										return [
+											//...oldProducts,
+											...products,
+										];
+									});
+									setTotalPages(pages);
+								})
+								.finally(() => {
+									setIsLoading(false);
+								});
+						}}
+					>Proximo</button>}
+					{(page <= totalPages) && !(page <= 1) && <button
+						onClick={() => {
+							setIsLoading(true);
+							const nextPage = page - 1;
+							setPage(nextPage);
+							productController
+								.get({ page: nextPage })
+								.then(({ products, pages }) => {
+									setProducts(() => {
+										return [
+											//...oldProducts,
+											...products,
+										];
+									});
+									setTotalPages(pages);
+								})
+								.finally(() => {
+									setIsLoading(false);
+								});
+						}}
+					>Voltar</button>}
 				</div>
 			</main>
 			<footer className="h-6 w-full bg-gray-400">
