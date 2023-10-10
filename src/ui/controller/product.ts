@@ -1,12 +1,11 @@
 import { productRepository } from "../repository/product";
-import { ProductSchema, Product } from "../schema/product";
-import { z as schema } from "zod";
+import { ProductSchema, Product, FileSchema } from "../schema/product";
 
 interface ProductControllerGetParams {
     name: string;
     description : string;
     value : number;
-    photo : string;
+    photo : File;
     onSuccess: (sucessMessage : string) => void;
     onError: (errorMessage: string) => void;
 }
@@ -18,33 +17,44 @@ interface ProductsControllerGetParams {
 async function create({
 	name, description, value, photo, onSuccess, onError
 }: ProductControllerGetParams) {
-	let fields = "";
 	try {
+		if (!(photo instanceof File)) {
+			throw new Error("Necessário escolher uma imagem!.");
+		}
+        
+		const fileData = {
+			filename: photo.name || "",
+			mimetype: photo.type || "",
+			encoding: "base64",
+		};
+        
+		FileSchema.safeParse(fileData);
+        
 		const product: Product = {
 			name,
 			description,
 			value,
-			photo
-		};    
+			photo: fileData,
+		};  
+        
 		//fail fast
-		ProductSchema.parse(product);    
+		const parsedProds = ProductSchema.safeParse(product);            
+		if (!parsedProds.success) {
+			throw new Error("Preencha todos os campos!");
+		}
 
-		await productRepository.createProduct(name, description, value, photo);        
+		const formData = new FormData();
+		formData.append("product", name);
+		formData.append("description", description);
+		formData.append("value", String(value));
+		formData.append("photo", photo as File);
+
+		await productRepository.createProduct(formData);        
 		onSuccess("Cadastro realizado com sucesso!");        
 	} catch (error) {
-		if (error instanceof schema.ZodError) {
-			const fieldErrors = error.errors.map(err => ({
-				path: err.path,
-				message: err.message
-			}));
-			console.error("Validation errors:", fieldErrors);
-			fieldErrors.forEach(({ path }) => {
-				fields += String(path)+" ";
-			});
-			onError(`Deu errado! Verifique o campo: ${fields}`);
-		} else {
+		if(error instanceof Error){
 			console.error("An unexpected error occurred:", error);
-			onError("Deu errado! :(");
+			onError("Erro ao inserir produto! "+error.message);    
 		}
 	}
 }

@@ -1,21 +1,32 @@
 import { productRepository } from "../repository/product";
-import { z as schema } from "zod";
-
-const ProductCreateSchema = schema.object({
-	name : schema.string().min(1),
-	description : schema.string().min(1),
-	value : schema.number().min(1),
-	photo : schema.string(),
-});
-
+import { ProductCreateSchema } from "../schema/product";
+ 
 async function create(req: Request) {
-	const body = ProductCreateSchema.safeParse(await req.json()); 
-	if(!body.success) {
+	const formData = await req.formData();
+	const name = formData.get("product") as string;
+	const description = formData.get("description") as string;
+	const value = Number(formData.get("value"));
+	const photo = formData.get("photo") as File;
+
+	const productData = {
+		name,
+		description,
+		value,
+		photo: {
+			filename: photo.name,
+			mimetype: photo.type,
+			encoding: "base64", // You can modify this based on your needs
+		},
+	};
+
+	// Validate using Zod Schema
+	const data = ProductCreateSchema.safeParse(productData);
+	if(!data.success) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "You need to provide a data to create a product",
-					description: body.error.issues,
+					message: "You need to provide a full data to create a product",
+					description: data.error.issues,
 				},
 			}),
 			{
@@ -23,14 +34,10 @@ async function create(req: Request) {
 			}  
 		);
 	}
-        
-	try {        
-		const createProductId = await productRepository.createProduct(
-			body.data.name,
-			body.data.description, 
-			body.data.value, 
-			body.data.photo
-		);
+
+	const createProductId = await productRepository.createProduct(name, description, value, photo.name, photo);
+
+	try {  
 		return new Response(
 			JSON.stringify({
 				id: createProductId
@@ -61,7 +68,6 @@ async function get(req: Request) {
 	};
 	const page = Number(query.page);
 	const limit = Number(query.limit);
-
 	if (query.page && isNaN(page)) {
 		return new Response(
 			JSON.stringify({
@@ -73,7 +79,7 @@ async function get(req: Request) {
 				status: 400,
 			}
 		);
-	}
+	}        
 	
 	if (query.limit && isNaN(limit)) {
 		return new Response(
