@@ -92,7 +92,7 @@ async function get(req: Request) {
 		const output = await productRepository.get({
 			page,
 			limit,
-		});
+		});		
 
 		return new Response(
 			JSON.stringify({

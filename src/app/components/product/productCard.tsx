@@ -6,18 +6,19 @@ interface ProductCardProps {
     title: string,
     description: string,
     price: number;
+    photo: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ title, description, price }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, photo }) => {
 	return (
 		<div className="bg-blue-200 pt-4 px-4 h-96 flex flex-col justify-between items-center hover:border-4 border-gray-500 rounded-md shadow-md">
 			<h2 className="text-2xl text-red-500 font-semibold">{title}</h2>
 			<div className="flex items-center w-40 h-40">
 				<img
-					src="https://cdn-icons-png.flaticon.com/512/2331/2331716.png"
+					src={photo}
 					alt="Minha Figura"
 					className="max-h-full max-w-full"
-				/>
+				/>                
 			</div>
 			<div className="text-sm text-center">
 				{description}

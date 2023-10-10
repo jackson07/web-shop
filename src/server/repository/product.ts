@@ -43,15 +43,28 @@ async function get({
 			count: "exact",
 		})
 		.range(startIndex,endIndex);
-
+        
 	if(error) throw new Error("Failed to fetch data.");
+<<<<<<< Updated upstream
 
+=======
+        
+>>>>>>> Stashed changes
 	const parsedData = ProductSchema.array().safeParse(data);
-
-	if (!parsedData.success)
-		throw new Error("Failed to parsed produts from database");
-
-	const products = parsedData.data;
+	if (!parsedData.success) throw new Error("Failed to parsed produts from database");
+    
+	const parsedDataWithPhotoLink = await Promise.all(parsedData.data.map(async (data) => {
+		const publicUrl = await supabase().storage
+			.from("images")
+			.getPublicUrl(data.photo);
+    
+		return {
+			...data,
+			photo: publicUrl.data.publicUrl,
+		};
+	}));
+    
+	const products = parsedDataWithPhotoLink;      
 	const total = count || products.length;
 	const totalPages = Math.ceil(total / currentLimit);
     
