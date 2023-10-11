@@ -58,6 +58,27 @@ export default function Home() {
 					})}					
 				</div>				
 				<div className="flex items-center justify-center pt-40 space-x-3">
+					{(page <= totalPages) && !(page <= 1) && <button
+						onClick={() => {
+							setIsLoading(true);
+							const nextPage = page - 1;
+							setPage(nextPage);
+							productController
+								.get({ page: nextPage })
+								.then(({ products, pages }) => {
+									setProducts(() => {
+										return [
+											//...oldProducts,
+											...products,
+										];
+									});
+									setTotalPages(pages);
+								})
+								.finally(() => {
+									setIsLoading(false);
+								});
+						}}
+					>Voltar</button>}
 					<p>{page} / {totalPages}</p>
 					{page < totalPages && <button
 						data-type="load-more"
@@ -80,28 +101,7 @@ export default function Home() {
 									setIsLoading(false);
 								});
 						}}
-					>Proximo</button>}
-					{(page <= totalPages) && !(page <= 1) && <button
-						onClick={() => {
-							setIsLoading(true);
-							const nextPage = page - 1;
-							setPage(nextPage);
-							productController
-								.get({ page: nextPage })
-								.then(({ products, pages }) => {
-									setProducts(() => {
-										return [
-											//...oldProducts,
-											...products,
-										];
-									});
-									setTotalPages(pages);
-								})
-								.finally(() => {
-									setIsLoading(false);
-								});
-						}}
-					>Voltar</button>}
+					>Proximo</button>}					
 				</div>
 			</main>
 			<footer className="h-6 w-full bg-gray-400">
