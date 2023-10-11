@@ -32,7 +32,7 @@ export default function Produtos() {
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
-		event.preventDefault();	
+		event.preventDefault();
 		productController.create({
 			name: productInputRef.current?.value as string,
 			description: descriprionInputRef.current?.value as string,
@@ -48,7 +48,7 @@ export default function Produtos() {
                 setImage(undefined);
 			},
 			onError(message){
-				alert(message);  
+				alert(message);
 			}
 		});   
 	};
@@ -70,7 +70,7 @@ export default function Produtos() {
 								</label>
 								<input 
 									type="text" 
-									ref={productInputRef} 
+									ref={productInputRef}
 									placeholder="Nome do produto" 
 									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300" />
 							</div>
@@ -82,13 +82,13 @@ export default function Produtos() {
 								</label>
 								<input 
 									type="text"
-									ref={descriprionInputRef} 
+									ref={descriprionInputRef}
 									placeholder="Descrição do produto"
 									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>
 							</div>
 							<div className="mb-4">
 								<label className="block text-gray-600 mb-1">
-                                    Valor:
+                                    R$:
 								</label>
 								<NumericFormat
 									value={value}

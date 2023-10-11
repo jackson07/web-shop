@@ -53,6 +53,7 @@ export default function Home() {
 								description={product.description}
 								price={product.value}    
 								photo={product.photo}
+								id={product.id}
 							/>                              
 						);
 					})}					
