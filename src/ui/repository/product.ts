@@ -20,10 +20,10 @@ interface ProductRepositoryGetOutput {
 async function createProduct(formData: FormData) {
 	const response = await fetch("../api/products", {
 		method: "POST",
-		headers: {
-			//MIME Type
-			"Content-Type": "application/formData",
-		},
+		// headers: {
+		// 	//MIME Type
+		// 	"Content-Type": "application/formData",
+		// },
 		body: formData,
 	});
   

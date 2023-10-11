@@ -9,7 +9,7 @@ import { NumberFormatValues, NumericFormat } from "react-number-format";
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 	const [image, setImage] = useState<File>();
-	const [value,setValue] = useState<number>(0);
+	const [value,setValue] = useState<number>();
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
