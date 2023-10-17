@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import ProductCard from "./components/product/productCard";
 import Header from "./components/header/header";
 import { productController } from "@/ui/controller/product";
-import { productBagController } from "@/ui/controller/productBag";
 
 interface HomeProduct {
     id: string;
@@ -19,7 +18,6 @@ export default function Home() {
 	const [page, setPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
 	const [isLoading, setIsLoading] = useState(true);
-	const [totalBag, setTotalBag] = useState("0");
  
 	useEffect(() => {		
 		if (!initialLoadComplete.current) {
@@ -35,12 +33,12 @@ export default function Home() {
 					initialLoadComplete.current = true;
 				});
 		}
-		productBagController.get().then(({totalBag}) => {setTotalBag(totalBag);});
+		// productBagController.get().then(({totalBag}) => {setTotalBag(totalBag);});
 	}, [page]);
 
 	return (
 		<div>			
-			<Header totalBag={totalBag}/>
+			<Header/>
 			<main className="min-h-screen flex flex-col items-center justify-center">
 				{isLoading && (
 					<div className="p-20">
