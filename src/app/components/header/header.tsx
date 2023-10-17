@@ -3,7 +3,11 @@ import Link from "next/link";
 import { BsFillHandbagFill } from "react-icons/bs";
 import { BiSolidUser } from "react-icons/bi";
 
-const Header = () => {
+interface HeaderProps {
+    totalBag?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({totalBag}) => {
 	return (
 		<nav className="fixed top-0 flex h-10 w-full justify-between items-center bg-gray-400 px-4">
 			<div className="flex items-center w-80 space-x-10 px-5">
@@ -22,7 +26,9 @@ const Header = () => {
 			<div className="flex items-center justify-center">
 				<Link href="/" className="text-2xl flex items-center cursor-pointer px-2">
 					<BsFillHandbagFill/>
-					<p className="text-xs font-semibold flex bottom-0 text-end pt-3">05</p>
+					<p className="text-xs font-semibold flex bottom-0 text-end pt-3">
+						{Number(totalBag) > 0 ? totalBag : 0}
+					</p>
 				</Link>
 				<Link href="/pages/login" className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
 					<BiSolidUser />

@@ -6,13 +6,21 @@ async function insertOnBag(id:UUID) {
 		.from("bag_list")
 		.insert({id_products: id});
     
-	console.log("fonnnn",error);
-    
 	if (error) throw new Error("Failed to add a product of favorite list");
 
 	return "Produto adicionado à lista de favoritos com sucesso!";
 }
+async function get() {
+	const {count, error} = await supabase()
+		.from("bag_list")
+		.select("*", {count: "exact"});    
+	if(error)throw new Error("Failed to fetch total bag values");
+
+	return count;
+}
+
 
 export const proudctBagRepository = {
-	insertOnBag
+	insertOnBag,
+	get
 };

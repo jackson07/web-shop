@@ -22,6 +22,12 @@ async function insertOnBag(id:UUID) {
 	}
 }
 
+async function get() {
+	return proudctBagRepository.get();    
+}
+
+
 export const productBagController = {
-	insertOnBag
+	insertOnBag,
+	get
 };

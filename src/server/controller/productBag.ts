@@ -41,6 +41,17 @@ async function insertOnBag(req:Request) {
 	}
 }
 
+async function get() {
+	const totalBag = await proudctBagRepository.get();
+
+	return new Response(
+		JSON.stringify({
+			totalBag: totalBag
+		})
+	);
+}
+
 export const productBagController = {
-	insertOnBag
+	insertOnBag,
+	get
 };
