@@ -27,7 +27,7 @@ async function createProduct(name:string, description: string, value: number, ph
 			.select("id")
 			.single();
     
-		if (error) throw new Error("Failed to create product");
+		if (error) throw new Error("Falha ao criar um novo produto.");
     
 		await supabase()
 			.storage.from("images")
@@ -39,7 +39,7 @@ async function createProduct(name:string, description: string, value: number, ph
 	} catch (e) {
 		const errorMessage = e instanceof Error ? e.message : "Unknown error";
 		console.error("An error occurred:", errorMessage);
-		throw new Error("Failed to create product" + errorMessage);
+		throw new Error("Falha ao criar um novo produto " + errorMessage);
 	}
 }
 
@@ -59,10 +59,10 @@ async function get({
 		})
 		.range(startIndex,endIndex);
         
-	if(error) throw new Error("Failed to fetch data.");
+	if(error) throw new Error("Falha ao obter conteúdo.");
     
 	const parsedData = ProductSchema.array().safeParse(data);
-	if (!parsedData.success) throw new Error("Failed to parsed produts from database");
+	if (!parsedData.success) throw new Error("Falha ao obter conteúdo da database.");
     
 	const parsedDataWithPhotoLink = await Promise.all(parsedData.data.map(async (data) => {
 		const publicUrl = await supabase().storage

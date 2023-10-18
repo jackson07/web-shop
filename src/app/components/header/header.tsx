@@ -25,7 +25,7 @@ const Header = () => {
 				type="text"
 				placeholder="Pesquisar"
 				className="w-96 rounded-lg border border-gray-300 px-2 focus:border-gray-500 focus:outline-none"
-			/>
+			/>			 
 			<div className="flex items-center justify-center">
 				<Link href="/" className="text-2xl flex items-center cursor-pointer px-2">
 					<BsFillHandbagFill/>
@@ -36,7 +36,7 @@ const Header = () => {
 				<Link href="/pages/login" className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
 					<BiSolidUser />
 				</Link>
-			</div>
+			</div>			
 		</nav>
 	);
 };

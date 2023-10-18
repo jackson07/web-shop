@@ -33,13 +33,12 @@ export default function Home() {
 					initialLoadComplete.current = true;
 				});
 		}
-		// productBagController.get().then(({totalBag}) => {setTotalBag(totalBag);});
 	}, [page]);
 
 	return (
 		<div>			
 			<Header/>
-			<main className="min-h-screen flex flex-col items-center justify-center">
+			<main className="min-h-screen flex flex-col items-center justify-center pb-6">
 				{isLoading && (
 					<div className="p-20">
 						<h2>Carregando...</h2>
@@ -62,7 +61,6 @@ export default function Home() {
 				<div className="flex items-center justify-center pt-40 space-x-3">
 					{(page <= totalPages) && !(page <= 1) && <button
 						onClick={() => {
-							setIsLoading(true);
 							const nextPage = page - 1;
 							setPage(nextPage);
 							productController
@@ -70,14 +68,10 @@ export default function Home() {
 								.then(({ products, pages }) => {
 									setProducts(() => {
 										return [
-											//...oldProducts,
 											...products,
 										];
 									});
 									setTotalPages(pages);
-								})
-								.finally(() => {
-									setIsLoading(false);
 								});
 						}}
 					>Voltar</button>}
@@ -85,7 +79,6 @@ export default function Home() {
 					{page < totalPages && <button
 						data-type="load-more"
 						onClick={() => {
-							setIsLoading(true);
 							const nextPage = page + 1;
 							setPage(nextPage);
 							productController
@@ -93,22 +86,18 @@ export default function Home() {
 								.then(({ products, pages }) => {
 									setProducts(() => {
 										return [
-											//...oldProducts,
 											...products,
 										];
 									});
 									setTotalPages(pages);
-								})
-								.finally(() => {
-									setIsLoading(false);
 								});
 						}}
 					>Proximo</button>}					
 				</div>
-			</main>
-			<footer className="h-6 w-full bg-gray-400">
-				<div className="flex items-center justify-center">@ create by Jack</div>
-			</footer>
+				<footer className="fixed bottom-0 h-6 w-full bg-gray-400">
+					<div className="flex items-center justify-center">@ create by Jack</div>
+				</footer>
+			</main>			
 		</div>	
 	);
 }

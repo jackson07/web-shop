@@ -15,9 +15,9 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, photo, id }) => {
 	return (
-		<div className="bg-blue-200 pt-4 px-4 h-96 flex flex-col justify-between items-center hover:border-4 border-gray-500 rounded-md shadow-md">
+		<div className="bg-blue-200 pt-4 px-4 h-96 max-w-full flex flex-col justify-between items-center hover:border-4 border-gray-500 rounded-md shadow-md">
 			<h2 className="text-2xl text-red-500 font-semibold">{title}</h2>
-			<div className="flex items-center w-40 h-40">
+			<div className="flex items-center justify-center w-3/4 h-40">
 				<img
 					src={photo}
 					alt="Minha Figura"

@@ -8,7 +8,7 @@ async function insertOnBag(req:Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "You need to provide a ID to add to favorite list",
+					message: "Você precisa informar um ID.",
 					description: body.error.issues,
 				},
 			}),
@@ -31,7 +31,7 @@ async function insertOnBag(req:Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "Failed to add to favorite list, reload the page",
+					message: "Falha ao adicionar o produto, recarregue a página!",
 				},
 			}),
 			{

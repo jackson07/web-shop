@@ -9,7 +9,8 @@ import { NumberFormatValues, NumericFormat } from "react-number-format";
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 	const [image, setImage] = useState<File>();
-	const [value,setValue] = useState<number>();
+	const [value,setValue] = useState<number>(null || 0);
+	const [sucess, setSucess] = useState<number>(0);
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
@@ -32,24 +33,26 @@ export default function Produtos() {
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
+		setSucess(1);
 		event.preventDefault();
-		productController.create({
+		productController.create({            
 			name: productInputRef.current?.value as string,
 			description: descriprionInputRef.current?.value as string,
 			value: Number(value),
 			photo: image as File,
-			onSuccess(message) {
-				alert(message);
+			onSuccess() {
                 productInputRef.current!.value = "";
                 descriprionInputRef.current!.value = "";
-                setValue(0);
                 imageInputRef.current!.value = "";
+                setValue(0);
                 setSelectedImage(null);
                 setImage(undefined);
 			},
 			onError(message){
 				alert(message);
 			}
+		}).finally(() => {
+			setSucess(0);
 		});   
 	};
 
@@ -63,6 +66,19 @@ export default function Produtos() {
 					<h2 className="text-2xl font-semibold mb-4">Cadastro de Produto!</h2>
 					<div className="flex justify-between space-x-10">
 						<div>
+							<div 
+								className="mb-4">
+								<label 
+									className="block text-gray-600 mb-1">
+                                    Foto:
+								</label>
+								<input 
+									type="file" 
+									accept="image/*" 
+									ref={imageInputRef}
+									onChange={(e) => {handleImage(e);}} 
+									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>						
+							</div>
 							<div className="mb-4">
 								<label 
 									className="block text-gray-600 mb-1">
@@ -101,25 +117,12 @@ export default function Produtos() {
 									type="text"
 									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"
 								/>
-							</div>
-							<div 
-								className="mb-4">
-								<label 
-									className="block text-gray-600 mb-1">
-                                    Foto:
-								</label>
-								<input 
-									type="file" 
-									accept="image/*" 
-									ref={imageInputRef}
-									onChange={(e) => {handleImage(e);}} 
-									className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-300"/>						
-							</div>
+							</div>							
 						</div>					
 						{selectedImage && (
 							<div className="mb-4">
 								<label 
-									className="block text-gray-600 mb-1">
+									className="block text-gray-600 mb-1 text-lg">
                                     Imagem Selecionada:
 								</label>
 								<img 
@@ -132,7 +135,10 @@ export default function Produtos() {
 					<div className="flex items-center space-x-40 p-6 left-0">
 						<button 
 							type="submit" 
-							className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600">
+							className={`px-4 py-2 rounded hover:bg-blue-600 ${
+								sucess === 1 ? "bg-green-300" : "bg-blue-300"
+							}`}
+						>
                             Gravar
 						</button>
 						<button 

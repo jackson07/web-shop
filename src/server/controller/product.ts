@@ -25,7 +25,7 @@ async function create(req: Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "You need to provide a full data to create a product",
+					message: "Necessário preencher enviar todos os dados para criar um produto.",
 					description: data.error.issues,
 				},
 			}),
@@ -50,7 +50,7 @@ async function create(req: Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "Failed to create a product",
+					message: "Falha ao criar um novo produto.",
 				},
 			}),
 			{
@@ -72,7 +72,7 @@ async function get(req: Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "`page` must be a number",
+					message: "`page` necessário ser um número",
 				},
 			}),
 			{
@@ -85,7 +85,7 @@ async function get(req: Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "`limit` must be a number",
+					message: "`limit` necessário ser um número",
 				},
 			}),
 			{
@@ -114,7 +114,7 @@ async function get(req: Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "Failed to fetch products",
+					message: "Falha ao obter produtos.",
 				},
 			}),
 			{

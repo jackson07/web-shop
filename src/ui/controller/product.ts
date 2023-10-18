@@ -6,7 +6,7 @@ interface ProductControllerGetParams {
     description : string;
     value : number;
     photo : File;
-    onSuccess: (sucessMessage : string) => void;
+    onSuccess: () => void;
     onError: (errorMessage: string) => void;
 }
 
@@ -17,14 +17,13 @@ interface ProductsControllerGetParams {
 async function create({
 	name, description, value, photo, onSuccess, onError
 }: ProductControllerGetParams) {
-	try {
+	try {	
 		if (!(photo instanceof File)) {
-			throw new Error("Necessário escolher uma imagem!.");
+			throw new Error("necessário escolher uma imagem!.");
 		}
-        
 		const fileData = {
-			filename: photo.name || "",
-			mimetype: photo.type || "",
+			filename: photo.name || "x",
+			mimetype: photo.type || "x",
 			encoding: "base64",
 		};
         
@@ -39,8 +38,9 @@ async function create({
         
 		//fail fast
 		const parsedProds = ProductSchema.safeParse(product);            
+		
 		if (!parsedProds.success) {
-			throw new Error("Preencha todos os campos!");
+			throw new Error("preencha todos os campos!");
 		}
 
 		const formData = new FormData();
@@ -50,11 +50,11 @@ async function create({
 		formData.append("photo", photo as File);
 
 		await productRepository.createProduct(formData);        
-		onSuccess("Cadastro realizado com sucesso!");        
+		return onSuccess();        
 	} catch (error) {
 		if(error instanceof Error){
 			console.error("An unexpected error occurred:", error);
-			onError("Erro ao inserir produto! "+error.message);    
+			onError("Erro ao inserir produto, "+error.message);    
 		}
 	}
 }

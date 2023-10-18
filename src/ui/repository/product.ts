@@ -20,10 +20,6 @@ interface ProductRepositoryGetOutput {
 async function createProduct(formData: FormData) {
 	const response = await fetch("../api/products", {
 		method: "POST",
-		// headers: {
-		// 	//MIME Type
-		// 	"Content-Type": "application/formData",
-		// },
 		body: formData,
 	});
   
@@ -32,14 +28,14 @@ async function createProduct(formData: FormData) {
 		return serverResponse;
 	}
   
-	throw new Error("Failed to create a new Product :(");
+	throw new Error("Falha ao criar um novo produto :(");
 }
 
 async function get({page, limit,}: ProductRepositoryGetParams): Promise<ProductRepositoryGetOutput> {
 	const response = await fetch(`/api/products?page=${page}&limit=${limit}`);
   
 	if (!response.ok) {
-		throw new Error(`Failed to fetch products. Status: ${response.status}`);
+		throw new Error(`Falha ao obter dados. Status: ${response.status}`);
 	}
 
 	const responseData = await response.json();
