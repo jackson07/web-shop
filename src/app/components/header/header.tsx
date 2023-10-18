@@ -27,7 +27,7 @@ const Header = () => {
 				className="w-96 rounded-lg border border-gray-300 px-2 focus:border-gray-500 focus:outline-none"
 			/>			 
 			<div className="flex items-center justify-center">
-				<Link href="/" className="text-2xl flex items-center cursor-pointer px-2">
+				<Link href="/pages/favoriteProducts" className="text-2xl flex items-center cursor-pointer px-2">
 					<BsFillHandbagFill/>
 					<p className="text-xs font-semibold flex bottom-0 text-end pt-3">						
 						{totalBag}

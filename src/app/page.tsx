@@ -36,7 +36,7 @@ export default function Home() {
 	}, [page]);
 
 	return (
-		<div>			
+		<>			
 			<Header/>
 			<main className="min-h-screen flex flex-col items-center justify-center pb-6">
 				{isLoading && (
@@ -98,6 +98,6 @@ export default function Home() {
 					<div className="flex items-center justify-center">@ create by Jack</div>
 				</footer>
 			</main>			
-		</div>	
+		</>	
 	);
 }
