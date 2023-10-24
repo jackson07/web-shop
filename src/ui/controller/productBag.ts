@@ -1,6 +1,5 @@
 import { ProductBagSchema } from "../schema/productBag";
 import { proudctBagRepository } from "../repository/productBag";
-//import { v4 as uuidv4 } from "uuid";
 
 type UUID = string;
 
@@ -23,7 +22,8 @@ async function insertOnBag(id:UUID) {
 }
 
 async function get() {
-	return proudctBagRepository.get();    
+	const totalBag = await proudctBagRepository.get();    
+	return totalBag;
 }
 
 

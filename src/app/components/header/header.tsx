@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { BsFillHandbagFill } from "react-icons/bs";
 import { BiSolidUser } from "react-icons/bi";
-import { productBagController } from "@/ui/controller/productBag";
+import { useProductData } from "@/app/context/useContext";
+// import { productBagController } from "@/ui/controller/productBag";
 
 const Header = () => {
-	const [totalBag, setTotalBag] = useState("0");
+	const { totalBag, idProducts } = useProductData();
+	// const [totalBag, setTotalBag] = useState(0);
+	// const [idProducts,setIdProducts] = useState<Array<string>>();
 
-	useEffect(() => {
-		productBagController.get().then(({totalBag}) => {setTotalBag(totalBag);});
-	});
+	// useEffect(() => {
+	// 	productBagController.get().then(({total,id_products}) => {
+	// 		setTotalBag(total);
+	// 		setIdProducts(id_products);
+
+	// 		console.log("state products",idProducts);
+	// 	});
+	// });
+	console.log("totall",totalBag);
+	console.log("state products",idProducts);
 
 	return (
 		<nav className="fixed top-0 flex h-10 w-full justify-between items-center bg-gray-400 px-4">
@@ -30,7 +40,7 @@ const Header = () => {
 				<Link href="/pages/favoriteProducts" className="text-2xl flex items-center cursor-pointer px-2">
 					<BsFillHandbagFill/>
 					<p className="text-xs font-semibold flex bottom-0 text-end pt-3">						
-						{totalBag}
+						{totalBag}    
 					</p>
 				</Link>
 				<Link href="/pages/login" className="relative text-2xl flex items-center justify-center cursor-pointer p-2">

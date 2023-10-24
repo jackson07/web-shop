@@ -7,7 +7,8 @@ export const ProductBagSchema = schema.object({
 export type ProductBag = schema.infer<typeof ProductBagSchema>;
 
 export const TotalProductBagSchema = schema.object({
-	totalBag: schema.string().min(1)
+	id_products: schema.string().min(1),
+	total: schema.number().min(1)
 });
 
 export type TotalProductBag = schema.infer<typeof TotalProductBagSchema>

@@ -1,6 +1,12 @@
 import { supabase } from "../infra/db/supabase";
+import { ProductBag, ProductBagSchema } from "../schema/productBag";
 
 type UUID = string;
+interface BagProductRepositoryGetOutPut {
+    id_products: ProductBag[];
+    total: number;
+}
+
 async function insertOnBag(id:UUID) {
 	const {error} = await supabase()
 		.from("bag_list")
@@ -10,13 +16,22 @@ async function insertOnBag(id:UUID) {
 
 	return "Produto adicionado à lista de favoritos com sucesso!";
 }
-async function get() {
-	const {count, error} = await supabase()
+async function get():Promise<BagProductRepositoryGetOutPut> {
+	const {count, data, error} = await supabase()
 		.from("bag_list")
-		.select("*", {count: "exact"});    
-	if(error)throw new Error("Falha ao obter dasdos");
+		.select("id_products", {count: "exact"});            
+	if(error)throw new Error("Falha ao obter dados.");
 
-	return count;
+	const parsedData = ProductBagSchema.array().safeParse(data);
+	if(!parsedData.success) throw new Error("Falha ao obter dados.");
+
+	const id_products = parsedData.data;
+	const total = count || id_products.length;
+    
+	return {
+		id_products,
+		total,
+	};
 }
 
 

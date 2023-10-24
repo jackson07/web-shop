@@ -1,6 +1,9 @@
-import { TotalProductBag } from "../schema/productBag";
-
 type UUID = string;
+
+interface ProductBag {
+    id_products: Array<UUID>;
+    total: number;
+}
 
 async function insertOnBag(id:UUID) {
 	const response = await fetch("../api/productsBag", {
@@ -16,9 +19,8 @@ async function insertOnBag(id:UUID) {
 	return "ok";
 }
 
-async function get(): Promise<TotalProductBag> {
+async function get(): Promise<ProductBag> {
 	const response = await fetch ("/api/productsBag");  
-    
 	if (!response.ok){
 		throw new Error("Failed to fetch bag total value.");
 	}

@@ -1,5 +1,6 @@
 "use client";
 import Header from "@/app/components/header/header";
+import { ProductProvider } from "@/app/context/useContext";
 import formatCurrency from "@/utils/formatCurrency";
 import React from "react";
 import { MdDelete } from "react-icons/md";
@@ -7,8 +8,10 @@ import { MdDelete } from "react-icons/md";
 export default function FavoriteProducts() {
 	const numberOfRows = 50;
 	return (
-		<>
-			<Header/>
+		<>        
+			<ProductProvider>
+				<Header/>
+			</ProductProvider>
 			<main className="min-h-screen flex items-center justify-center">
 				<div className="bg-white p-8 rounded-lg shadow-md w-4/5" style={{ height: "80vh" }}>
 					<div className="h-full overflow-y-auto">

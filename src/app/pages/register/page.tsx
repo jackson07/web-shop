@@ -4,6 +4,7 @@ import React, { ChangeEvent, useState, useRef } from "react";
 import Link from "next/link";
 import { productController } from "@/ui/controller/product";
 import { NumberFormatValues, NumericFormat } from "react-number-format";
+import { ProductProvider } from "@/app/context/useContext";
 //import { TextField } from "@mui/material";
 
 export default function Produtos() {    
@@ -58,7 +59,9 @@ export default function Produtos() {
 
 	return (
 		<div>
-			<Header />
+			<ProductProvider>
+				<Header/>
+			</ProductProvider>
 			<main className="min-h-screen flex items-center justify-center">	
 				<form
 					onSubmit={handleSubmit}

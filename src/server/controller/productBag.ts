@@ -18,7 +18,7 @@ async function insertOnBag(req:Request) {
 		);    
 	}
 	try {
-		const addId = await proudctBagRepository.insertOnBag(body.data.id);
+		const addId = await proudctBagRepository.insertOnBag(body.data.id_products);
 		return new Response(
 			JSON.stringify({
 				message: addId
@@ -43,11 +43,10 @@ async function insertOnBag(req:Request) {
 
 async function get() {
 	const totalBag = await proudctBagRepository.get();
-
 	return new Response(
-		JSON.stringify({
-			totalBag: totalBag
-		})
+		JSON.stringify(
+			totalBag
+		)
 	);
 }
 
