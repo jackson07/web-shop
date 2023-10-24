@@ -16,13 +16,11 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 	const [idProducts, setIdProducts] = useState(Array<string>);
 
 	useEffect(() => {
-		productBagController.get().then(({ total,id_products }) => {
-			console.log("totalzaooo",total);
+		productBagController.get().then(({ total, id_products }) => {
 			setTotalBag(total);
 			setIdProducts(id_products);
 		});
 	}, []);
-	console.log("totalzaooo");
 	return (
 		<ProductContext.Provider value={{ totalBag, idProducts }}>
 			{children}

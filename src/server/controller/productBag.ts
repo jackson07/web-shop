@@ -2,7 +2,6 @@ import { proudctBagRepository } from "../repository/productBag";
 import { ProductBagSchema } from "../schema/productBag";
 
 async function insertOnBag(req:Request) {
-	console.log(req);
 	const body = ProductBagSchema.safeParse(await req.json());
 	if(!body.success) {
 		return new Response(

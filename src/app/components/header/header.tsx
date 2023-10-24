@@ -7,18 +7,6 @@ import { useProductData } from "@/app/context/useContext";
 
 const Header = () => {
 	const { totalBag, idProducts } = useProductData();
-	// const [totalBag, setTotalBag] = useState(0);
-	// const [idProducts,setIdProducts] = useState<Array<string>>();
-
-	// useEffect(() => {
-	// 	productBagController.get().then(({total,id_products}) => {
-	// 		setTotalBag(total);
-	// 		setIdProducts(id_products);
-
-	// 		console.log("state products",idProducts);
-	// 	});
-	// });
-	console.log("totall",totalBag);
 	console.log("state products",idProducts);
 
 	return (
