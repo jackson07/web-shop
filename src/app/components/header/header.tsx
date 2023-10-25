@@ -6,8 +6,7 @@ import { useProductData } from "@/app/context/useContext";
 // import { productBagController } from "@/ui/controller/productBag";
 
 const Header = () => {
-	const { totalBag, idProducts } = useProductData();
-	console.log("state products",idProducts);
+	const { totalBag } = useProductData();
 
 	return (
 		<nav className="fixed top-0 flex h-10 w-full justify-between items-center bg-gray-400 px-4">
