@@ -18,8 +18,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, ph
 	const { updateProducts } = useProductData();
 
 	const handleClick = () => {
-		productBagController.insertOnBag(id);
-		updateProducts();
+		productBagController.insertOnBag({
+			id: id,
+			onSuccess(message) {
+				console.log("sucess123",message);   
+				updateProducts();
+			},
+			onError(error) {
+				console.log("error",error);
+			}
+		});		
 	};
 
 	return (

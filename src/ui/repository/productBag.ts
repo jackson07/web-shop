@@ -19,14 +19,13 @@ async function insertOnBag(id:UUID) {
 		body: JSON.stringify({ id }),
 	});
     
-	return response;
+	return response.json();
 }
 
 async function get(): Promise<ProductBag> {
 	const response = await fetch ("/api/productsBag");  
-	if (!response.ok){
-		throw new Error("Failed to fetch bag total value.");
-	}
+	if (!response.ok)throw new Error("Failed to fetch bag total value.");
+	
 	return await response.json();     
 }
 

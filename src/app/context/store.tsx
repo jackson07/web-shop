@@ -26,16 +26,10 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 		productBagController.get().then(({ total, id_products }) => {
 			setTotalBag(total);
 			setIdProducts(id_products);
-			console.log("context updated", id_products, total);
 		});
 	};
     
 	useEffect(() => {
-		// productBagController.get().then(({ total, id_products }) => {		
-		// 	setTotalBag(total);
-		// 	setIdProducts(id_products);
-		// 	console.log("context", id_products, total);
-		// });
 		updateProducts();
 	}, []);
 	return (

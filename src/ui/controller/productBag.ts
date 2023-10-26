@@ -2,8 +2,16 @@ import { ProductBagSchema } from "../schema/productBag";
 import { proudctBagRepository } from "../repository/productBag";
 
 type UUID = string;
-
-async function insertOnBag(id:UUID) {
+interface ProductInsertBagControllerParams {
+    id: UUID;
+    onSuccess: (message: string) => void;
+    onError: (error: string) => void;
+}
+async function insertOnBag({
+	id,
+	onSuccess,
+	onError,
+}: ProductInsertBagControllerParams) {
 	try {
 		const objectId = {
 			id: id
@@ -12,8 +20,15 @@ async function insertOnBag(id:UUID) {
 		if(!parsedId.success){
 			throw new Error("Erro ao adicionar, atualize a página!");
 		}
+
 		const tryAddBag = await proudctBagRepository.insertOnBag(parsedId.data.id);
-		return tryAddBag;
+
+		if (tryAddBag.error) {
+			onError(tryAddBag.error.message);
+		} else {
+			onSuccess(tryAddBag.message);
+		}
+
 	} catch (error) {
 		if(error instanceof Error){
 			console.error("An unexpected error occurred:", error);   

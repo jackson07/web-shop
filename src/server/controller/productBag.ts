@@ -8,7 +8,7 @@ async function insertOnBag(req:Request) {
 		return new Response(
 			JSON.stringify({
 				error: {
-					message: "Você precisa informar um ID.",
+					message: "Erro ao adicionar, ID não reconhecido.",
 					description: body.error.issues,
 				},
 			}),
@@ -18,28 +18,41 @@ async function insertOnBag(req:Request) {
 		);    
 	}
 	try {		
-		const addId = await proudctBagRepository.insertOnBag(body.data.id);
-		
+		const data = await proudctBagRepository.insertOnBag(body.data.id);
 		return new Response(
 			JSON.stringify({
-				message: addId
+				message: data
 			}),
 			{
 				status: 201,
 			}
 		);
-	} catch {
-		return new Response(
-			JSON.stringify({
-				error: {
-					message: "Falha ao adicionar o produto, recarregue a página!",
-				},
-			}),
-			{
-				status: 400,
-			}
-		);   
+	} catch (err) {
+		if (err instanceof Error) {
+			return new Response(
+				JSON.stringify({
+					error: {                        
+						message: err.message,
+					},
+				}),
+				{
+					status: 404,
+				}
+			);
+		}
 	}
+	// } catch {
+	// 	return new Response(
+	// 		JSON.stringify({
+	// 			error: {
+	// 				message: "Falha ao adicionar o produto, recarregue a página!",
+	// 			},
+	// 		}),
+	// 		{
+	// 			status: 400,
+	// 		}
+	// 	);   
+	// }
 }
 
 async function get() {
