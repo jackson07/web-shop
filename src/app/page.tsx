@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import ProductCard from "./components/product/productCard";
 import Header from "./components/header/header";
 import { productController } from "@/ui/controller/product";
-import { ProductProvider } from "./context/useContext";
 
 interface HomeProduct {
     id: string;
@@ -38,9 +37,7 @@ export default function Home() {
 
 	return (
 		<>			
-			<ProductProvider>
-				<Header/>
-			</ProductProvider>
+			<Header/>
 			<main className="min-h-screen flex flex-col items-center justify-center pb-6">
 				{isLoading && (
 					<div className="p-20">

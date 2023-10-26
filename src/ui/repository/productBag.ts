@@ -1,7 +1,11 @@
 type UUID = string;
 
+type IdProduct = {
+    id_products: string;
+};
+
 interface ProductBag {
-    id_products: Array<UUID>;
+    id_products: IdProduct[];
     total: number;
 }
 
@@ -14,9 +18,8 @@ async function insertOnBag(id:UUID) {
 		},
 		body: JSON.stringify({ id }),
 	});
-
-	console.log(id, response);
-	return "ok";
+    
+	return response;
 }
 
 async function get(): Promise<ProductBag> {

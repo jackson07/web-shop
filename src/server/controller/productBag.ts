@@ -1,8 +1,9 @@
 import { proudctBagRepository } from "../repository/productBag";
-import { ProductBagSchema } from "../schema/productBag";
+import { IDProductBagSchema } from "../schema/productBag";
 
 async function insertOnBag(req:Request) {
-	const body = ProductBagSchema.safeParse(await req.json());
+	const body = IDProductBagSchema.safeParse(await req.json());
+	
 	if(!body.success) {
 		return new Response(
 			JSON.stringify({
@@ -16,8 +17,9 @@ async function insertOnBag(req:Request) {
 			}
 		);    
 	}
-	try {
-		const addId = await proudctBagRepository.insertOnBag(body.data.id_products);
+	try {		
+		const addId = await proudctBagRepository.insertOnBag(body.data.id);
+		
 		return new Response(
 			JSON.stringify({
 				message: addId

@@ -13,7 +13,6 @@ async function insertOnBag(id:UUID) {
 		.insert({id_products: id});
     
 	if (error) throw new Error("Falha ao adicionar o produto na lista de favcoritos.");
-
 	return "Produto adicionado à lista de favoritos com sucesso!";
 }
 async function get():Promise<BagProductRepositoryGetOutPut> {

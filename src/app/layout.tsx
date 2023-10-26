@@ -1,6 +1,7 @@
 import React from "react";
 import "./globals.css";
 import type { Metadata } from "next";
+import { ProductProvider } from "./context/store";
 
 export const metadata: Metadata = {
 	title: "Web-Shop",
@@ -14,7 +15,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="pt-BR">
-			<body className={"bg-blue-100"}>{children}</body>
+			<body className={"bg-blue-100"}>
+				<ProductProvider>{children}</ProductProvider>
+			</body>
 		</html>
 	);
 }

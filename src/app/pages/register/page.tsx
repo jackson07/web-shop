@@ -4,7 +4,7 @@ import React, { ChangeEvent, useState, useRef } from "react";
 import Link from "next/link";
 import { productController } from "@/ui/controller/product";
 import { NumberFormatValues, NumericFormat } from "react-number-format";
-import { ProductProvider } from "@/app/context/useContext";
+import { ProductProvider } from "@/app/context/store";
 //import { TextField } from "@mui/material";
 
 export default function Produtos() {    

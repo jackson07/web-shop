@@ -2,6 +2,7 @@ import React from "react";
 import { BiBookmarkHeart, BiCartAdd } from "react-icons/bi";
 import formatCurrency from "../../../utils/formatCurrency";
 import { productBagController } from "@/ui/controller/productBag";
+import { useProductData } from "@/app/context/store";
 
 type UUID = string;
 
@@ -14,6 +15,13 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, photo, id }) => {
+	const { updateProducts } = useProductData();
+
+	const handleClick = () => {
+		productBagController.insertOnBag(id);
+		updateProducts();
+	};
+
 	return (
 		<div className="bg-blue-200 pt-4 px-4 h-96 max-w-full flex flex-col justify-between items-center hover:border-4 border-gray-500 rounded-md shadow-md">
 			<h2 className="text-2xl text-red-500 font-semibold">{title}</h2>
@@ -30,9 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, ph
 			<div className="text-2xl">{formatCurrency(price,"BRL")}</div>
 			<div className="h-6 flex items-center justify-center space-x-6 w-full">
 				<button className="flex items-center"><BiCartAdd/>Comprar</button>
-				<button className="group relative" onClick={() => {
-					productBagController.insertOnBag(id);
-				}}>
+				<button className="group relative" onClick={handleClick}>
 					<BiBookmarkHeart/>
 					<div className="hidden group-hover:block bg-black text-white text-xs absolute bottom-full transform -translate-x-1/2 p-1 rounded w-24">
                         Lista de Desejos

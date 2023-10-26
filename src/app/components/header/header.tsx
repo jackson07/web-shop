@@ -2,12 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { BsFillHandbagFill } from "react-icons/bs";
 import { BiSolidUser } from "react-icons/bi";
-import { useProductData } from "@/app/context/useContext";
+import { useProductData } from "@/app/context/store";
 // import { productBagController } from "@/ui/controller/productBag";
 
 const Header = () => {
 	const { totalBag } = useProductData();
-
 	return (
 		<nav className="fixed top-0 flex h-10 w-full justify-between items-center bg-gray-400 px-4">
 			<div className="flex items-center w-80 space-x-10 px-5">
