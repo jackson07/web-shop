@@ -19,7 +19,7 @@ async function create({
 }: ProductControllerGetParams) {
 	try {	
 		if (!(photo instanceof File)) {
-			throw new Error("necessário escolher uma imagem!.");
+			throw new Error("necessário escolher uma imagem!");
 		}
 		const fileData = {
 			filename: photo.name || "x",
