@@ -6,8 +6,8 @@ interface ProductControllerGetParams {
     description : string;
     value : number;
     photo : File;
-    onSuccess: () => void;
-    onError: (errorMessage: string) => void;
+    onSuccess: (message: string) => void;
+    onError: (errore: string) => void;
 }
 
 interface ProductsControllerGetParams {
@@ -49,8 +49,14 @@ async function create({
 		formData.append("value", String(value));
 		formData.append("photo", photo as File);
 
-		await productRepository.createProduct(formData);        
-		return onSuccess();        
+		const data = await productRepository.createProduct(formData); 
+        
+		if (data.error) {
+			onError(data.error.message);
+		} else {
+			onSuccess(data.message);
+		}
+		return;
 	} catch (error) {
 		if(error instanceof Error){
 			console.error("An unexpected error occurred:", error);

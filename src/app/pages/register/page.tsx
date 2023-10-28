@@ -2,16 +2,15 @@
 import Header from "@/app/components/header/header";
 import React, { ChangeEvent, useState, useRef } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 import { productController } from "@/ui/controller/product";
 import { NumberFormatValues, NumericFormat } from "react-number-format";
-import { ProductProvider } from "@/app/context/store";
-//import { TextField } from "@mui/material";
+import { ToastContainer } from "react-toastify";
 
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 	const [image, setImage] = useState<File>();
 	const [value,setValue] = useState<number>(null || 0);
-	const [sucess, setSucess] = useState<number>(0);
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
@@ -34,34 +33,40 @@ export default function Produtos() {
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
-		setSucess(1);
 		event.preventDefault();
 		productController.create({            
 			name: productInputRef.current?.value as string,
 			description: descriprionInputRef.current?.value as string,
 			value: Number(value),
 			photo: image as File,
-			onSuccess() {
-                productInputRef.current!.value = "";
-                descriprionInputRef.current!.value = "";
-                imageInputRef.current!.value = "";
-                setValue(0);
-                setSelectedImage(null);
-                setImage(undefined);
+			onSuccess(message) {
+				productInputRef.current!.value = "";
+				descriprionInputRef.current!.value = "";
+				imageInputRef.current!.value = "";
+				setValue(0);
+				setSelectedImage(null);
+				setImage(undefined);
+				toast.success(message, { 
+					autoClose: 3000, 
+					position: "bottom-center",
+					closeOnClick: true,
+					pauseOnHover: false
+				});
 			},
-			onError(message){
-				alert(message);
+			onError(error){
+				toast.error(error, {
+					autoClose: 3000, 
+					position: "bottom-center",
+					closeOnClick: true,
+					pauseOnHover: false
+				});
 			}
-		}).finally(() => {
-			setSucess(0);
 		});   
 	};
 
 	return (
-		<div>
-			<ProductProvider>
-				<Header/>
-			</ProductProvider>
+		<div>			
+			<Header/>			
 			<main className="min-h-screen flex items-center justify-center">	
 				<form
 					onSubmit={handleSubmit}
@@ -138,9 +143,7 @@ export default function Produtos() {
 					<div className="flex items-center space-x-40 p-6 left-0">
 						<button 
 							type="submit" 
-							className={`px-4 py-2 rounded hover:bg-blue-600 ${
-								sucess === 1 ? "bg-green-300" : "bg-blue-300"
-							}`}
+							className={"px-4 py-2 rounded hover:bg-blue-600 bg-blue-300"}
 						>
                             Gravar
 						</button>
@@ -152,6 +155,7 @@ export default function Produtos() {
 						</button>
 					</div>
 				</form>
+				<ToastContainer />
 			</main>
 		</div>
 	);

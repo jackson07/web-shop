@@ -74,6 +74,7 @@ export default function Home() {
 										];
 									});
 									setTotalPages(pages);
+									window.scrollTo(0, 0);
 								});
 						}}
 					>Voltar</button>}
@@ -92,6 +93,7 @@ export default function Home() {
 										];
 									});
 									setTotalPages(pages);
+									window.scrollTo(0, 0);
 								});
 						}}
 					>Proximo</button>}					

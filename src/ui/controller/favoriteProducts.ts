@@ -4,7 +4,7 @@ async function get() {
 	return favoritePoductsRepository.get();
 }
 
-async function deleteFromBag(id:string) {
+async function deleteFromBag(id:string) {    
 	await favoritePoductsRepository.deleteFromBag(id);    
 }
 

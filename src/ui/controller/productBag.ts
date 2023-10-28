@@ -14,7 +14,7 @@ async function insertOnBag({
 }: ProductInsertBagControllerParams) {
 	try {
 		const objectId = {
-			id: id
+			id: id 
 		};
 		const parsedId = ProductBagSchema.safeParse(objectId);
 		if(!parsedId.success){

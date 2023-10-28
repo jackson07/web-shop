@@ -14,7 +14,7 @@ interface ProductRepositoryGetOutPut {
 
 async function createProduct(name:string, description: string, value: number, photo: string, file: File) {
 	try {    
-		const { data, error } = await supabase()
+		const { error } = await supabase()
 			.from("Products")
 			.insert([
 				{
@@ -27,7 +27,7 @@ async function createProduct(name:string, description: string, value: number, ph
 			.select("id")
 			.single();
     
-		if (error) throw new Error("Falha ao criar um novo produto.");
+		if (error) throw new Error("Erro ao gravar produto.");
     
 		await supabase()
 			.storage.from("images")
@@ -35,7 +35,7 @@ async function createProduct(name:string, description: string, value: number, ph
     
 		//if (storageResponse.error) throw new Error("Failed to upload photo"); //caso precise validar se a imagem existe. Nesse caso, se existir somente ignora
     
-		return data.id;
+		return "Produto gravado com sucesso!";
 	} catch (e) {
 		const errorMessage = e instanceof Error ? e.message : "Unknown error";
 		console.error("An error occurred:", errorMessage);

@@ -35,29 +35,43 @@ async function create(req: Request) {
 		);
 	}
 
-	const createProductId = await productRepository.createProduct(name, description, value, photo.name, photo);
+	const createProduct = await productRepository.createProduct(name, description, value, photo.name, photo);
 
 	try {  
 		return new Response(
 			JSON.stringify({
-				id: createProductId
+				message: createProduct
 			}),
 			{
 				status: 201,
 			}
 		);
-	} catch {
-		return new Response(
-			JSON.stringify({
-				error: {
-					message: "Falha ao criar um novo produto.",
-				},
-			}),
-			{
-				status: 400,
-			}
-		);
+	} catch (err) {
+		if (err instanceof Error) {
+			return new Response(
+				JSON.stringify({
+					error: {                        
+						message: err.message,
+					},
+				}),
+				{
+					status: 404,
+				}
+			);
+		}
 	}
+	// } catch {
+	// 	return new Response(
+	// 		JSON.stringify({
+	// 			error: {
+	// 				message: "Falha ao criar um novo produto.",
+	// 			},
+	// 		}),
+	// 		{
+	// 			status: 400,
+	// 		}
+	// 	);
+	// }
 }
 
 async function get(req: Request) {

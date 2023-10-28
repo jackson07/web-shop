@@ -24,7 +24,7 @@ export default function FavoriteProducts() {
 		});
 	}, []);
     
-	const extractedIDs = idProducts.map(obj => obj.id_products);
+	const extractedIDs = idProducts.map(prod => prod.id_products);
 	const filteredProducts = products.filter(product =>
 		extractedIDs.includes(product.id)
 	);
