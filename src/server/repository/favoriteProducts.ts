@@ -1,12 +1,12 @@
 import { supabase } from "../infra/db/supabase";
 
-async function get() {
+async function get() {    
 	const {data, error} = await supabase()
 		.from("Products")
 		.select("*");
-
+        
 	if(error) throw new Error("Falha ao obter produtos");
-
+	console.log("prods.:::",data.length);
 	return data;
 }
 
@@ -23,3 +23,4 @@ export const favoritePoductsRepository = {
 	get,
 	deleteFromBag
 };
+

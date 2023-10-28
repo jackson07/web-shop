@@ -1,7 +1,7 @@
 import { favoritePoductsRepository } from "../repository/favoriteProducts";
 
 async function get() {
-	const products = await favoritePoductsRepository.get();
+	const products = await favoritePoductsRepository.get();	
 	try {
 		return new Response(
 			JSON.stringify({products}),{
