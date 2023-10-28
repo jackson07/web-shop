@@ -31,5 +31,5 @@ async function get(): Promise<ProductBag> {
 
 export const proudctBagRepository = {
 	insertOnBag,
-	get
+	get,
 };

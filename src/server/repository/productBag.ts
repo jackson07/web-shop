@@ -47,8 +47,7 @@ async function get():Promise<BagProductRepositoryGetOutPut> {
 	};
 }
 
-
 export const proudctBagRepository = {
 	insertOnBag,
-	get
+	get,
 };

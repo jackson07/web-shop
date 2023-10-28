@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ProductCard from "./components/product/productCard";
 import Header from "./components/header/header";
 import { productController } from "@/ui/controller/product";
+import { ToastContainer } from "react-toastify";
 
 interface HomeProduct {
     id: string;
@@ -57,8 +58,9 @@ export default function Home() {
 							/>                              
 						);
 					})}					
-				</div>				
-				<div className="flex items-center justify-center pt-40 space-x-3">
+				</div>	
+				<ToastContainer />			
+				<div className="flex items-center justify-center space-x-3">
 					{(page <= totalPages) && !(page <= 1) && <button
 						onClick={() => {
 							const nextPage = page - 1;
@@ -94,10 +96,11 @@ export default function Home() {
 						}}
 					>Proximo</button>}					
 				</div>
-				<footer className="fixed bottom-0 h-6 w-full bg-gray-400">
-					<div className="flex items-center justify-center">@ create by Jack</div>
-				</footer>
-			</main>			
+				
+			</main>	
+			<footer className="bottom-0 h-6 w-full bg-gray-400">
+				<div className="flex items-center justify-center">@ create by Jack</div>
+			</footer>		
 		</>	
 	);
 }

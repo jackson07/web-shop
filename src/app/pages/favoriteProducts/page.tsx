@@ -16,7 +16,7 @@ interface FavoriteProducts {
 
 export default function FavoriteProducts() {
 	const [products,setProducts] = useState<FavoriteProducts[]>([]);
-	const { idProducts } = useProductData();
+	const { idProducts, updateProducts } = useProductData();
 
 	useEffect(() => {
 		favoritePoductsController.get().then(({ products }) => {
@@ -52,10 +52,16 @@ export default function FavoriteProducts() {
 											<td align="center">{products.id.substring(0, 4)}</td>
 											<td align="center">{products.name}</td>
 											<td align="center">{products.description}</td>
-											<td align="center">{formatCurrency(products.value, "BRL")}</td>
+											<td align="right">{formatCurrency(products.value, "BRL")}</td>
 											<td align="center">
 												<div>
-													<MdDelete />
+													<button onClick={() => {
+														favoritePoductsController
+															.deleteFromBag(products.id)
+															.then(() => {updateProducts();});														
+													}}>
+														<MdDelete />
+													</button>
 												</div>
 											</td>
 										</tr> 

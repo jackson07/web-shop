@@ -3,6 +3,8 @@ import { BiBookmarkHeart, BiCartAdd } from "react-icons/bi";
 import formatCurrency from "../../../utils/formatCurrency";
 import { productBagController } from "@/ui/controller/productBag";
 import { useProductData } from "@/app/context/store";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type UUID = string;
 
@@ -21,11 +23,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, ph
 		productBagController.insertOnBag({
 			id: id,
 			onSuccess(message) {
-				console.log("sucess123",message);   
+				toast.success(message, { 
+					autoClose: 3000, 
+					position: "bottom-center",
+					closeOnClick: true,
+					pauseOnHover: false
+				});
 				updateProducts();
 			},
 			onError(error) {
-				console.log("error",error);
+				toast.error(error, {
+					autoClose: 3000, 
+					position: "bottom-center",
+					closeOnClick: true,
+					pauseOnHover: false
+				});
 			}
 		});		
 	};
@@ -51,7 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, ph
 					<div className="hidden group-hover:block bg-black text-white text-xs absolute bottom-full transform -translate-x-1/2 p-1 rounded w-24">
                         Lista de Desejos
 					</div>
-				</button>
+				</button>				
 			</div>
 		</div>
 	);

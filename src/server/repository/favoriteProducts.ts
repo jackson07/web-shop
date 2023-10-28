@@ -10,6 +10,16 @@ async function get() {
 	return data;
 }
 
-export const favoritePoductstRepository = {
+async function deleteFromBag(id:string) {
+	const {error} = await supabase()
+		.from("bag_list")
+		.delete()
+		.eq("id_products", id);
+
+	if (error) throw new Error(`Produto com ID: "${id}" não encontrado.`);     
+}
+
+export const favoritePoductsRepository = {
 	get,
+	deleteFromBag
 };

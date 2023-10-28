@@ -60,7 +60,7 @@ async function create({
 }
 
 async function get({ page }: ProductsControllerGetParams) {
-	return productRepository.get({ page: page || 1, limit: 4 });
+	return productRepository.get({ page: page || 1, limit: 8 });
 }
     
 export const productController = {

@@ -41,8 +41,7 @@ async function get() {
 	return totalBag;
 }
 
-
 export const productBagController = {
 	insertOnBag,
-	get
+	get,
 };

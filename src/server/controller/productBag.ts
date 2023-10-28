@@ -41,18 +41,6 @@ async function insertOnBag(req:Request) {
 			);
 		}
 	}
-	// } catch {
-	// 	return new Response(
-	// 		JSON.stringify({
-	// 			error: {
-	// 				message: "Falha ao adicionar o produto, recarregue a página!",
-	// 			},
-	// 		}),
-	// 		{
-	// 			status: 400,
-	// 		}
-	// 	);   
-	// }
 }
 
 async function get() {
@@ -66,5 +54,5 @@ async function get() {
 
 export const productBagController = {
 	insertOnBag,
-	get
+	get,
 };
