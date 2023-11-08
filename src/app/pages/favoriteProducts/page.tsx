@@ -25,7 +25,7 @@ export default function FavoriteProducts() {
 	}, []);
     
 	const extractedIDs = idProducts.map(prod => prod.id_products);
-
+	console.log("produtos page::", extractedIDs);
 	const filteredProducts = products.filter((product) =>
 		extractedIDs.includes(product.id)
 	);

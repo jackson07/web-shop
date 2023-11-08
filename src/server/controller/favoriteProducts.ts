@@ -1,10 +1,10 @@
 import { favoritePoductsRepository } from "../repository/favoriteProducts";
 
 async function get() {
-	const products = await favoritePoductsRepository.get();	
 	try {
+		const products = await favoritePoductsRepository.get();	
 		return new Response(
-			JSON.stringify({products}),{
+			JSON.stringify(products),{
 				status: 200,
 			}
 		);

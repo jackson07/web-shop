@@ -44,12 +44,25 @@ async function insertOnBag(req:Request) {
 }
 
 async function get() {
-	const totalBag = await proudctBagRepository.get();
-	return new Response(
-		JSON.stringify(
-			totalBag
-		)
-	);
+	try {
+		const totalBag = await proudctBagRepository.get();
+		return new Response(
+			JSON.stringify(totalBag),{
+				status: 200,
+			}
+		);
+	} catch {
+		return new Response(
+			JSON.stringify({
+				error: {
+					message: "Falha ao obter produtos.",
+				},
+			}),
+			{
+				status: 400,
+			}
+		); 
+	}
 }
 
 export const productBagController = {
