@@ -4,21 +4,26 @@ async function get() {
 	try {
 		const products = await favoritePoductsRepository.get();	
 		return new Response(
-			JSON.stringify(products),{
-				status: 200,
-			}
-		);
-	} catch {
-		return new Response(
-			JSON.stringify({
-				error: {
-					message: "Falha ao obter produtos.",
-				},
-			}),
+			JSON.stringify(
+				products
+			),
 			{
-				status: 400,
+				status: 201,
 			}
 		);
+	} catch (err) {
+		if (err instanceof Error) {
+			return new Response(
+				JSON.stringify({
+					error: {                        
+						message: err.message,
+					},
+				}),
+				{
+					status: 404,
+				}
+			);
+		}
 	}
 
 }

@@ -38,6 +38,7 @@ export default function FavoriteProducts() {
 						<table className="w-full bg-blue-200">
 							<thead className="">
 								<tr>
+									<th>Seq</th>
 									<th>ID</th>
 									<th>Nome do Produto</th>
 									<th>Descrição do Produto</th>
@@ -46,9 +47,10 @@ export default function FavoriteProducts() {
 								</tr>
 							</thead>                                          
 							<tbody>                                
-								{filteredProducts.map((products)=> {
+								{filteredProducts.map((products,index)=> {
 									return (
 										<tr key={products.id}>
+											<td>{index+1}</td>
 											<td align="center">{products.id.substring(0, 4)}</td>
 											<td align="center">{products.name}</td>
 											<td align="center">{products.description}</td>
