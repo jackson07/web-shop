@@ -87,7 +87,24 @@ async function get({
     
 }
 
+async function deleteProducts(id:string) {
+	const {error} = await supabase()
+		.from("Products")
+		.delete()
+		.eq("id", id);
+
+	if (error) throw new Error(`Produto com ID: "${id}" não encontrado.`);     
+
+	const {error: bagListError} = await supabase()
+		.from("bag_list")
+		.delete()
+		.eq("id_products", id);
+
+	if (bagListError) throw new Error(`Produto com ID: "${id}" não encontrado.`);     
+}
+
 export const productRepository = {
 	createProduct,
 	get,
+	deleteProducts
 };

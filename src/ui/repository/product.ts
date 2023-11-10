@@ -47,7 +47,16 @@ async function get({page, limit,}: ProductRepositoryGetParams): Promise<ProductR
 	};
 }
 
+async function deleteProduct(id:string) {
+	const response = await fetch(`/api/products/${id}`, {
+		method: "DELETE",
+	});        
+
+	if(!response.ok) throw new Error("Falha ao deletar!");   
+}
+
 export const productRepository = {
 	createProduct,
 	get,
+	deleteProduct
 };

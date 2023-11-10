@@ -60,18 +60,6 @@ async function create(req: Request) {
 			);
 		}
 	}
-	// } catch {
-	// 	return new Response(
-	// 		JSON.stringify({
-	// 			error: {
-	// 				message: "Falha ao criar um novo produto.",
-	// 			},
-	// 		}),
-	// 		{
-	// 			status: 400,
-	// 		}
-	// 	);
-	// }
 }
 
 async function get(req: Request) {
@@ -138,7 +126,30 @@ async function get(req: Request) {
 	}        
 }
 
+async function deleteProduct(req:Request, id: string) {
+	try {
+		await productRepository.deleteProducts(id);
+		return new Response(null, {
+			status: 204,
+		});
+	} catch (err) {
+		if (err instanceof Error) {
+			return new Response(
+				JSON.stringify({
+					error: {                        
+						message: err.message,
+					},
+				}),
+				{
+					status: 404,
+				}
+			);
+		}
+	}
+}
+
 export const productController = {
 	create,
 	get,
+	deleteProduct
 };

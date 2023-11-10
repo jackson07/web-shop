@@ -47,8 +47,7 @@ async function deleteFromBag(req:Request, id: string) {
 				}
 			);
 		}
-	}
-    
+	}    
 }
 
 export const favoritePoductsController = {

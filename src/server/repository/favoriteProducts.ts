@@ -16,7 +16,6 @@ async function get(): Promise<FavoriteRepositoryGetOutPut> {
 	const parsedData = ProductSchema.array().safeParse(data);
     
 	if(!parsedData.success) throw new Error("Falha ao obter dados.");
-	console.log("",parsedData.data,parsedData.data.length);
 
 	return {products: parsedData.data};
 }
