@@ -16,6 +16,9 @@ const Header = () => {
 				<Link href="/pages/register">
 					<div className="text-xs">Cadastro</div>
 				</Link>
+				<Link href="/pages/products">
+					<div className="text-xs">Produtos</div>
+				</Link>
 			</div>
 			<input
 				type="text"

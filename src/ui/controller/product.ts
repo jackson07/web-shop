@@ -12,6 +12,7 @@ interface ProductControllerGetParams {
 
 interface ProductsControllerGetParams {
     page: number;
+    limit?: number
 }
 
 async function create({
@@ -65,11 +66,16 @@ async function create({
 	}
 }
 
-async function get({ page }: ProductsControllerGetParams) {
-	return productRepository.get({ page: page || 1, limit: 8 });
+async function get({ page, limit }: ProductsControllerGetParams) {
+	return productRepository.get({ page: page || 1, limit: limit || 8 });
+}
+
+async function deleteProduct(id:string) {
+	await productRepository.deleteProduct(id);    
 }
     
 export const productController = {
 	create,
 	get,
+	deleteProduct
 };
