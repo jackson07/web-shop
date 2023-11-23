@@ -32,6 +32,9 @@ const Header = () => {
 				<Link href="/pages/login" className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
 					<BiSolidUser />
 				</Link>
+				<form action="/auth/sign-out" method="GET" className="relative text-2xl flex items-center justify-center cursor-pointer p-2">
+					<BiSolidUser />
+				</form>
 			</div>			
 		</nav>
 	);

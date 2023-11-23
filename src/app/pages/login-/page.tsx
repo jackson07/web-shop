@@ -4,10 +4,10 @@ import Link from "next/link";
 import Messages from "./messages";
 
 
-export default function Login() {
+export default function Loguin() {
 	return (
 		<form 
-			className="min-h-screen flex items-center justify-center flex-col"
+			className="min-h-screen flex items-center justify-center"
 			action="/auth/sign-in"
 			method="post" 
 		>
@@ -39,20 +39,14 @@ export default function Login() {
 					>
                             Registrar
 					</button>
-					<button formAction="/auth/call-back" className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+					<button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
 						<Link href="/">
                                 Início
 						</Link>
 					</button>	
-					<button 
-						formAction="/auth/sign-out"                    
-						className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-					>
-                            Sair
-					</button>									
+					<Messages />				
 				</div>
 			</div>
-			<Messages />
 		</form>
 	);
 }

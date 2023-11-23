@@ -4,6 +4,8 @@ import ProductCard from "./components/product/productCard";
 import Header from "./components/header/header";
 import { productController } from "@/ui/controller/product";
 import { ToastContainer } from "react-toastify";
+import { supabase } from "@/server/infra/db/supabase";
+// import { useRouter } from "next/router";
 
 interface HomeProduct {
     id: string;
@@ -19,21 +21,57 @@ export default function Home() {
 	const [page, setPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
 	const [isLoading, setIsLoading] = useState(true);
+	// const router = useRouter();
+	
  
-	useEffect(() => {		
-		if (!initialLoadComplete.current) {
-			productController
-				.get({ page })
-				.then(({products, pages}) => {
+	// useEffect(() => {		
+	// 	if (!initialLoadComplete.current) {
+	// 		productController
+	// 			.get({ page })
+	// 			.then(({products, pages}) => {
+	// 				setProducts(products);
+	// 				setTotalPages(pages);
+	// 			})
+	// 			.finally(() => {
+	// 				setPage(1);
+	// 				setIsLoading(false);
+	// 				initialLoadComplete.current = true;
+	// 			});
+	// 	}
+	// }, [page]);
+    
+	// const { data } = await supabase().auth.getSession();
+
+	// if (!data.session) {
+	// 	return router.push("/login");
+	// }
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const { data } = await supabase().auth.getSession();
+            
+				if (!data.session) {
+					// router.push("/login");
+					alert("fon");
+					return;
+				}
+    
+				if (!initialLoadComplete.current) {
+					const { products, pages } = await productController.get({ page });
 					setProducts(products);
 					setTotalPages(pages);
-				})
-				.finally(() => {
 					setPage(1);
 					setIsLoading(false);
 					initialLoadComplete.current = true;
-				});
-		}
+				}
+			} catch (error) {
+				console.error("Erro ao obter a sessão:", error);
+				// Lidar com o erro conforme necessário
+			}
+		};
+    
+		fetchData();
 	}, [page]);
 
 	return (
