@@ -1,13 +1,23 @@
 import { supabase } from "../infra/db/supabase";
+import { Product, ProductSchema } from "../schema/product";
 
-async function get() {    
-	const {data, error} = await supabase()
+interface FavoriteRepositoryGetOutPut {
+    products: Product[];
+}
+
+async function get(): Promise<FavoriteRepositoryGetOutPut> {    
+	const { data, error } = await supabase()
 		.from("Products")
-		.select("*");
-        
+		.select("*")
+		.range(0,61);
+
 	if(error) throw new Error("Falha ao obter produtos");
-	console.log("prods.:::",data.length);
-	return data;
+    
+	const parsedData = ProductSchema.array().safeParse(data);
+    
+	if(!parsedData.success) throw new Error("Falha ao obter dados.");
+
+	return {products: parsedData.data};
 }
 
 async function deleteFromBag(id:string) {

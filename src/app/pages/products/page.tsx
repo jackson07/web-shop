@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/app/components/header/header";
 import { useProductData } from "@/app/context/store";
-import { favoritePoductsController } from "@/ui/controller/favoriteProducts";
+import { productController } from "@/ui/controller/product";
 import formatCurrency from "@/utils/formatCurrency";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
@@ -16,18 +16,19 @@ interface FavoriteProducts {
 
 export default function FavoriteProducts() {
 	const [products,setProducts] = useState<FavoriteProducts[]>([]);
-	const { idProducts, updateProducts } = useProductData();
+	const { updateProducts } = useProductData();
 
 	useEffect(() => {
-		favoritePoductsController.get().then(({ products }) => {
-			setProducts(products);
-		});
+		productController
+			.get({
+				page: 1, 
+				limit: 10000000
+			})
+			.then(({products}) => {
+				setProducts(products);
+			});
 	}, []);
     
-	const extractedIDs = idProducts.map(prod => prod.id_products);
-	const filteredProducts = products.filter((product) =>
-		extractedIDs.includes(product.id)
-	);
 	return (
 		<>			
 			<Header/>			
@@ -46,7 +47,7 @@ export default function FavoriteProducts() {
 								</tr>
 							</thead>                                          
 							<tbody>                                
-								{filteredProducts.map((products,index)=> {
+								{products.map((products,index)=> {
 									return (
 										<tr key={products.id}>
 											<td>{index+1}</td>
@@ -57,9 +58,30 @@ export default function FavoriteProducts() {
 											<td align="center">
 												<div>
 													<button onClick={() => {
-														favoritePoductsController
-															.deleteFromBag(products.id)
-															.then(() => {updateProducts();});														
+														productController
+															.deleteProduct(products.id)
+															.then(() => {																
+																setProducts(
+																	(currentProducts) => {
+																		return currentProducts.filter(
+																			(
+																				currentProduct
+																			) => {
+																				return (
+																					currentProduct.id !==
+                                                                                    products.id
+																				);
+																			}
+																		);
+																	}
+																);
+																updateProducts();
+															})
+															.catch(() => {
+																console.error(
+																	"Failed to delete"
+																);
+															});														
 													}}>
 														<MdDelete />
 													</button>
