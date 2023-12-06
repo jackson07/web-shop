@@ -4,6 +4,7 @@ import ProductCard from "./components/product/productCard";
 import Header from "./components/header/header";
 import { productController } from "@/ui/controller/product";
 import { ToastContainer } from "react-toastify";
+import CheckUserConnection from "@/utils/checkUserConnection";
 
 interface HomeProduct {
     id: string;
@@ -38,6 +39,7 @@ export default function Home() {
 
 	return (
 		<>			
+			<CheckUserConnection/>
 			<Header/>
 			<main className="min-h-screen flex flex-col items-center justify-center pb-6">
 				{isLoading && (

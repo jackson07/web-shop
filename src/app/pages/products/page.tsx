@@ -2,6 +2,7 @@
 import Header from "@/app/components/header/header";
 import { useProductData } from "@/app/context/store";
 import { productController } from "@/ui/controller/product";
+import CheckUserConnection from "@/utils/checkUserConnection";
 import formatCurrency from "@/utils/formatCurrency";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
@@ -31,6 +32,7 @@ export default function FavoriteProducts() {
     
 	return (
 		<>			
+			<CheckUserConnection/>
 			<Header/>			
 			<main className="min-h-screen flex items-center justify-center">
 				<div className="bg-white p-8 rounded-lg shadow-md w-4/5" style={{ height: "80vh" }}>

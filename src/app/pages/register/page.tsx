@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { productController } from "@/ui/controller/product";
 import { NumberFormatValues, NumericFormat } from "react-number-format";
 import { ToastContainer } from "react-toastify";
+import CheckUserConnection from "@/utils/checkUserConnection";
 
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -65,7 +66,8 @@ export default function Produtos() {
 	};
 
 	return (
-		<div>			
+		<div>		
+			<CheckUserConnection/>	
 			<Header/>			
 			<main className="min-h-screen flex items-center justify-center">	
 				<form
