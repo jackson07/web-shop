@@ -4,8 +4,7 @@ import ProductCard from "./components/product/productCard";
 import Header from "./components/header/header";
 import { productController } from "@/ui/controller/product";
 import { ToastContainer } from "react-toastify";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { redirect } from "next/navigation";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
 interface HomeProduct {
     id: string;
@@ -15,17 +14,12 @@ interface HomeProduct {
     photo: string;
 }
 
-export default function Home() {
+export default withPageAuthRequired(function Home() {
 	const initialLoadComplete = useRef(false);
 	const [products, setProducts] = useState<HomeProduct[]>([]);
 	const [page, setPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
 	const [isLoading, setIsLoading] = useState(true);
-	const { user, error, isLoading : wait } = useUser();
-
-	if (wait) return <div>Loading...</div>;
-	if (error) return <div>{error.message}</div>;
-	if (!user) return redirect("/pages/login");
  
 	useEffect(() => {		
 		if (!initialLoadComplete.current) {
@@ -113,3 +107,4 @@ export default function Home() {
 		</>	
 	);
 }
+);

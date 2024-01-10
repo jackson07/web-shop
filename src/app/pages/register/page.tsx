@@ -6,21 +6,15 @@ import { toast } from "react-toastify";
 import { productController } from "@/ui/controller/product";
 import { NumberFormatValues, NumericFormat } from "react-number-format";
 import { ToastContainer } from "react-toastify";
-// import { useUser } from "@auth0/nextjs-auth0/client";
-// import { redirect } from "next/navigation";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
-export default function Produtos() {    
+export default withPageAuthRequired(function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 	const [image, setImage] = useState<File>();
 	const [value,setValue] = useState<number>(null || 0);
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
-	// const { user, error, isLoading } = useUser();
-
-	// if (isLoading) return <div>Loading...</div>;
-	// if (error) return <div>{error.message}</div>;
-	// if (!user) return redirect("/pages/login");
     
 	const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target?.files?.[0];
@@ -167,3 +161,4 @@ export default function Produtos() {
 		</div>
 	);
 }
+);

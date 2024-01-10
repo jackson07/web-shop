@@ -5,7 +5,7 @@ import { productController } from "@/ui/controller/product";
 import formatCurrency from "@/utils/formatCurrency";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { redirect } from "next/navigation";
 
 interface FavoriteProducts {
@@ -16,7 +16,7 @@ interface FavoriteProducts {
     photo: string;
 }
 
-export default function FavoriteProducts() {
+export default withPageAuthRequired(function FavoriteProducts() {
 	const [products,setProducts] = useState<FavoriteProducts[]>([]);
 	const { updateProducts } = useProductData();
 	const { user, error, isLoading } = useUser();
@@ -105,4 +105,4 @@ export default function FavoriteProducts() {
 			
 		</>
 	);
-}
+});
