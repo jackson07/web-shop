@@ -13,8 +13,8 @@ export default function Login() {
 			<div className="bg-white p-8 rounded-lg shadow-md w-96">                			
 				<h2 className="text-2xl font-semibold mb-4">Faça o Login!</h2>		
 				<button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
-					<a href="/api/auth/login">Login</a>
-				</button>	
+					<a href="/api/auth/login?returnTo=/pages/login">Login</a>
+				</button>
 			</div>
 		</div>
 			:

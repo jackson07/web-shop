@@ -5,6 +5,8 @@ import { favoritePoductsController } from "@/ui/controller/favoriteProducts";
 import formatCurrency from "@/utils/formatCurrency";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { redirect } from "next/navigation";
 
 interface FavoriteProducts {
     id: string;
@@ -17,6 +19,11 @@ interface FavoriteProducts {
 export default function FavoriteProducts() {
 	const [products,setProducts] = useState<FavoriteProducts[]>([]);
 	const { idProducts, updateProducts } = useProductData();
+	const { user, error, isLoading } = useUser();
+
+	if (isLoading) return <div>Loading...</div>;
+	if (error) return <div>{error.message}</div>;
+	if (!user) return redirect("/pages/login");
 
 	useEffect(() => {
 		favoritePoductsController.get().then(({ products }) => {

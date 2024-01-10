@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import { productController } from "@/ui/controller/product";
 import { NumberFormatValues, NumericFormat } from "react-number-format";
 import { ToastContainer } from "react-toastify";
-import CheckUserConnection from "@/utils/checkUserConnection";
+// import { useUser } from "@auth0/nextjs-auth0/client";
+// import { redirect } from "next/navigation";
 
 export default function Produtos() {    
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -15,6 +16,11 @@ export default function Produtos() {
 	const productInputRef = useRef<HTMLInputElement>(null);
 	const descriprionInputRef = useRef<HTMLInputElement>(null);
 	const imageInputRef = useRef<HTMLInputElement>(null);
+	// const { user, error, isLoading } = useUser();
+
+	// if (isLoading) return <div>Loading...</div>;
+	// if (error) return <div>{error.message}</div>;
+	// if (!user) return redirect("/pages/login");
     
 	const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target?.files?.[0];
@@ -67,7 +73,6 @@ export default function Produtos() {
 
 	return (
 		<div>		
-			<CheckUserConnection/>	
 			<Header/>			
 			<main className="min-h-screen flex items-center justify-center">	
 				<form

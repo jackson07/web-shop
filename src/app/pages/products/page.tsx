@@ -2,10 +2,11 @@
 import Header from "@/app/components/header/header";
 import { useProductData } from "@/app/context/store";
 import { productController } from "@/ui/controller/product";
-import CheckUserConnection from "@/utils/checkUserConnection";
 import formatCurrency from "@/utils/formatCurrency";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { redirect } from "next/navigation";
 
 interface FavoriteProducts {
     id: string;
@@ -18,6 +19,11 @@ interface FavoriteProducts {
 export default function FavoriteProducts() {
 	const [products,setProducts] = useState<FavoriteProducts[]>([]);
 	const { updateProducts } = useProductData();
+	const { user, error, isLoading } = useUser();
+
+	if (isLoading) return <div>Loading...</div>;
+	if (error) return <div>{error.message}</div>;
+	if (!user) return redirect("/pages/login");
 
 	useEffect(() => {
 		productController
@@ -32,7 +38,6 @@ export default function FavoriteProducts() {
     
 	return (
 		<>			
-			<CheckUserConnection/>
 			<Header/>			
 			<main className="min-h-screen flex items-center justify-center">
 				<div className="bg-white p-8 rounded-lg shadow-md w-4/5" style={{ height: "80vh" }}>

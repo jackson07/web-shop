@@ -1,6 +1,7 @@
 import { productController } from "@/server/controller/product";
 
 export async function GET(request:Request) {
+	
 	return await productController.get(request);    
 }
 
